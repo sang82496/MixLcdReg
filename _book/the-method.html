@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 The method | Creating the mixLcdReg R package</title>
+  <meta name="description" content="3 The method | Creating the mixLcdReg R package" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 The method | Creating the mixLcdReg R package" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 The method | Creating the mixLcdReg R package" />
+  
+  
+  
+
+<meta name="author" content="Sang-wook Lee" />
+
+
+<meta name="date" content="2023-12-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="the-model.html"/>
+<link rel="next" href="conclude.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#description-file"><i class="fa fa-check"></i><b>1.1</b> DESCRIPTION file</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#package-level-documentation"><i class="fa fa-check"></i><b>1.2</b> Package-level documentation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="the-model.html"><a href="the-model.html"><i class="fa fa-check"></i><b>2</b> The model</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="the-model.html"><a href="the-model.html#generating-data-from-model"><i class="fa fa-check"></i><b>2.1</b> Generating data from model</a></li>
+<li class="chapter" data-level="2.2" data-path="the-model.html"><a href="the-model.html#visualizing-data-in-one-dimensional-case"><i class="fa fa-check"></i><b>2.2</b> Visualizing data in one-dimensional case</a></li>
+<li class="chapter" data-level="2.3" data-path="the-model.html"><a href="the-model.html#visualizing-data-and-model-in-one-dimensional-case"><i class="fa fa-check"></i><b>2.3</b> Visualizing data and model in one-dimensional case</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="the-method.html"><a href="the-method.html"><i class="fa fa-check"></i><b>3</b> The method</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="the-method.html"><a href="the-method.html#preprocessing"><i class="fa fa-check"></i><b>3.1</b> preprocessing</a></li>
+<li class="chapter" data-level="3.2" data-path="the-method.html"><a href="the-method.html#initialization"><i class="fa fa-check"></i><b>3.2</b> Initialization</a></li>
+<li class="chapter" data-level="3.3" data-path="the-method.html"><a href="the-method.html#e-step"><i class="fa fa-check"></i><b>3.3</b> E-step</a></li>
+<li class="chapter" data-level="3.4" data-path="the-method.html"><a href="the-method.html#m-step"><i class="fa fa-check"></i><b>3.4</b> M-step</a></li>
+<li class="chapter" data-level="3.5" data-path="the-method.html"><a href="the-method.html#trying-out-the-method"><i class="fa fa-check"></i><b>3.5</b> Trying out the method</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="conclude.html"><a href="conclude.html"><i class="fa fa-check"></i><b>4</b> Conclusion</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Creating the <code>mixLcdReg</code> R package</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-method" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> The method<a href="the-method.html#the-method" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>We are using Expectation-Maximization(EM) algorithm to maximize the surrogate log-likelihood
+<span class="math inline">\(Q(\alpha, g, \theta) = \frac{1}{N} \sum_{t=1}^T \sum_{i=1}^{n_t} \sum_{k=1}^K r_{tik} \left[ g_k \left(Y_i^{(t)} -\theta_{k0} -\theta_k^T X^{(t)} \right)) + \log \pi_{tk}(\alpha) \right]\)</span>.</p>
+<p>Here’s a high-level look at the algorithm.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="the-method.html#cb15-1" tabindex="-1"></a><span class="do"><span id='B-param'>###&quot;B-param&quot;###</span></span></span>
+<span id="cb15-2"><a href="the-method.html#cb15-2" tabindex="-1"></a><span class="co">#&#39; @param number of binning</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="the-method.html#cb16-1" tabindex="-1"></a><span class="do"><span id='K-param'>###&quot;K-param&quot;###</span></span></span>
+<span id="cb16-2"><a href="the-method.html#cb16-2" tabindex="-1"></a><span class="co">#&#39; @param K number of clusters</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="the-method.html#cb17-1" tabindex="-1"></a><span class="do"><span id='r_bar-param'>###&quot;r_bar-param&quot;###</span></span></span>
+<span id="cb17-2"><a href="the-method.html#cb17-2" tabindex="-1"></a><span class="co">#&#39; @param r_bar threshold for responsibility</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="the-method.html#cb18-1" tabindex="-1"></a><span class="do"><span id='lambda_alpha-param'>###&quot;lambda_alpha-param&quot;###</span></span></span>
+<span id="cb18-2"><a href="the-method.html#cb18-2" tabindex="-1"></a><span class="co">#&#39; @param lambda_alpha penalty parameter for alpha</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="the-method.html#cb19-1" tabindex="-1"></a><span class="do"><span id='lambda_theta-param'>###&quot;lambda_theta-param&quot;###</span></span></span>
+<span id="cb19-2"><a href="the-method.html#cb19-2" tabindex="-1"></a><span class="co">#&#39; @param lambda_theta penalty parameter for theta</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="the-method.html#cb20-1" tabindex="-1"></a><span class="co">#&#39; Mixture of log-concave regression</span></span>
+<span id="cb20-2"><a href="the-method.html#cb20-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb20-3"><a href="the-method.html#cb20-3" tabindex="-1"></a><a href='the-model.html#X-param'>&lt;&lt;X-param&gt;&gt;</a></span>
+<span id="cb20-4"><a href="the-method.html#cb20-4" tabindex="-1"></a><a href='the-model.html#Y-param'>&lt;&lt;Y-param&gt;&gt;</a></span>
+<span id="cb20-5"><a href="the-method.html#cb20-5" tabindex="-1"></a><a href='the-method.html#K-param'>&lt;&lt;K-param&gt;&gt;</a></span>
+<span id="cb20-6"><a href="the-method.html#cb20-6" tabindex="-1"></a><a href='the-method.html#B-param'>&lt;&lt;B-param&gt;&gt;</a></span>
+<span id="cb20-7"><a href="the-method.html#cb20-7" tabindex="-1"></a><span class="co">#&#39; @param min_count_ratio min count ratio</span></span>
+<span id="cb20-8"><a href="the-method.html#cb20-8" tabindex="-1"></a><a href='the-method.html#r_bar-param'>&lt;&lt;r_bar-param&gt;&gt;</a></span>
+<span id="cb20-9"><a href="the-method.html#cb20-9" tabindex="-1"></a><a href='the-method.html#lambda_alpha-param'>&lt;&lt;lambda_alpha-param&gt;&gt;</a></span>
+<span id="cb20-10"><a href="the-method.html#cb20-10" tabindex="-1"></a><a href='the-method.html#lambda_theta-param'>&lt;&lt;lambda_theta-param&gt;&gt;</a></span>
+<span id="cb20-11"><a href="the-method.html#cb20-11" tabindex="-1"></a><span class="co">#&#39; @param max_iter number of maximum iterations of EM to perform</span></span>
+<span id="cb20-12"><a href="the-method.html#cb20-12" tabindex="-1"></a><span class="co">#&#39; @param iter_eta threshold for the iteration. If the increment of loglikelihood is smaller than iter_eta,</span></span>
+<span id="cb20-13"><a href="the-method.html#cb20-13" tabindex="-1"></a><span class="co">#&#39; we terminate the iterations. </span></span>
+<span id="cb20-14"><a href="the-method.html#cb20-14" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb20-15"><a href="the-method.html#cb20-15" tabindex="-1"></a><span class="co"># <span id='mixLcdReg'>mixLcdReg</span> &lt;- function(X, </span></span>
+<span id="cb20-16"><a href="the-method.html#cb20-16" tabindex="-1"></a><span class="co">#                      Y, </span></span>
+<span id="cb20-17"><a href="the-method.html#cb20-17" tabindex="-1"></a><span class="co">#                      K, </span></span>
+<span id="cb20-18"><a href="the-method.html#cb20-18" tabindex="-1"></a><span class="co">#                      B = 40, </span></span>
+<span id="cb20-19"><a href="the-method.html#cb20-19" tabindex="-1"></a><span class="co">#                      min_count_ratio = 0, </span></span>
+<span id="cb20-20"><a href="the-method.html#cb20-20" tabindex="-1"></a><span class="co">#                      r_bar, </span></span>
+<span id="cb20-21"><a href="the-method.html#cb20-21" tabindex="-1"></a><span class="co">#                      lambda_alpha, </span></span>
+<span id="cb20-22"><a href="the-method.html#cb20-22" tabindex="-1"></a><span class="co">#                      lambda_theta, </span></span>
+<span id="cb20-23"><a href="the-method.html#cb20-23" tabindex="-1"></a><span class="co">#                      max_iter = 100, </span></span>
+<span id="cb20-24"><a href="the-method.html#cb20-24" tabindex="-1"></a><span class="co">#                      iter_eta = 1e-6) {</span></span>
+<span id="cb20-25"><a href="the-method.html#cb20-25" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="the-method.html#cb20-26" tabindex="-1"></a></span>
+<span id="cb20-27"><a href="the-method.html#cb20-27" tabindex="-1"></a>  <span class="co"># preprocessing</span></span>
+<span id="cb20-28"><a href="the-method.html#cb20-28" tabindex="-1"></a>  </span>
+<span id="cb20-29"><a href="the-method.html#cb20-29" tabindex="-1"></a>  <span class="co"># initialization with flexmix</span></span>
+<span id="cb20-30"><a href="the-method.html#cb20-30" tabindex="-1"></a>  </span>
+<span id="cb20-31"><a href="the-method.html#cb20-31" tabindex="-1"></a>  <span class="co"># iteration</span></span>
+<span id="cb20-32"><a href="the-method.html#cb20-32" tabindex="-1"></a>  <span class="co">#  for (i in seq(max_iter)) {</span></span>
+<span id="cb20-33"><a href="the-method.html#cb20-33" tabindex="-1"></a>      <span class="do">## E-step</span></span>
+<span id="cb20-34"><a href="the-method.html#cb20-34" tabindex="-1"></a>      </span>
+<span id="cb20-35"><a href="the-method.html#cb20-35" tabindex="-1"></a>      <span class="do">## M-step</span></span>
+<span id="cb20-36"><a href="the-method.html#cb20-36" tabindex="-1"></a>        <span class="do">### M-step alpha</span></span>
+<span id="cb20-37"><a href="the-method.html#cb20-37" tabindex="-1"></a>        <span class="do">### M-step theta</span></span>
+<span id="cb20-38"><a href="the-method.html#cb20-38" tabindex="-1"></a>        <span class="do">### M-step shift</span></span>
+<span id="cb20-39"><a href="the-method.html#cb20-39" tabindex="-1"></a>        <span class="do">### M-step g</span></span>
+<span id="cb20-40"><a href="the-method.html#cb20-40" tabindex="-1"></a>      </span>
+<span id="cb20-41"><a href="the-method.html#cb20-41" tabindex="-1"></a>      <span class="do">## termination criteria</span></span>
+<span id="cb20-42"><a href="the-method.html#cb20-42" tabindex="-1"></a>      </span>
+<span id="cb20-43"><a href="the-method.html#cb20-43" tabindex="-1"></a>  <span class="co">#  }</span></span>
+<span id="cb20-44"><a href="the-method.html#cb20-44" tabindex="-1"></a>  <span class="co"># return</span></span>
+<span id="cb20-45"><a href="the-method.html#cb20-45" tabindex="-1"></a></span>
+<span id="cb20-46"><a href="the-method.html#cb20-46" tabindex="-1"></a><span class="co">#}</span></span></code></pre></div>
+<p>Here is more detailed explanation of the algorithm:</p>
+<div id="preprocessing" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> preprocessing<a href="the-method.html#preprocessing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before initializing the parameters, we need to apply binning to <span class="math inline">\(Y\)</span>. Since it is better to deal with a matrix than a list, we are resizing Y. Resized Y has <span class="math inline">\(N_{bin} \times d\)</span> dimension, where <span class="math inline">\(N_{B_t}\)</span> is the number of non-empty bins in time <span class="math inline">\(t\)</span> and <span class="math inline">\(N_{bin} = \sum_{t = 1}^T N_{B_t}\)</span>. Since <span class="math inline">\(N_{B_t} \le B\)</span>, <span class="math inline">\(N_{bin} \le TB\)</span>. Also, to make <span class="math inline">\(X\)</span> have same row-dimension of <span class="math inline">\(Y\)</span>, we need to repeat <span class="math inline">\(X^{(t)}\)</span>, which is <span class="math inline">\(t^{th}\)</span> row of <span class="math inline">\(X\)</span>, <span class="math inline">\(N_{B_t}\)</span> times. Note that <code>T</code> means <code>True</code> in <code>R</code>, we use <code>TT</code> instead of <code>T</code> for time so that <span class="math inline">\(t = 1,..., TT\)</span></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="the-method.html#cb21-1" tabindex="-1"></a><span class="co">#&#39; Binning on Y</span></span>
+<span id="cb21-2"><a href="the-method.html#cb21-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb21-3"><a href="the-method.html#cb21-3" tabindex="-1"></a><a href='the-model.html#X-param'>&lt;&lt;X-param&gt;&gt;</a></span>
+<span id="cb21-4"><a href="the-method.html#cb21-4" tabindex="-1"></a><a href='the-model.html#Y-param'>&lt;&lt;Y-param&gt;&gt;</a></span>
+<span id="cb21-5"><a href="the-method.html#cb21-5" tabindex="-1"></a><a href='the-method.html#B-param'>&lt;&lt;B-param&gt;&gt;</a></span>
+<span id="cb21-6"><a href="the-method.html#cb21-6" tabindex="-1"></a><span class="co">#&#39; @param min_count_ratio min count ratio</span></span>
+<span id="cb21-7"><a href="the-method.html#cb21-7" tabindex="-1"></a><span class="co">#&#39; @return Y_bin N_bin-by-d matrix, indicating the center of the bins</span></span>
+<span id="cb21-8"><a href="the-method.html#cb21-8" tabindex="-1"></a><span class="co">#&#39; @return Y_count N_bin-vector indicating how many points belong to each bin</span></span>
+<span id="cb21-9"><a href="the-method.html#cb21-9" tabindex="-1"></a><span class="co">#&#39; @return X_bin N_bin-by-p matrix, which is expanded version of X so that its dimension agrees with Y_bin&#39;s </span></span>
+<span id="cb21-10"><a href="the-method.html#cb21-10" tabindex="-1"></a><span class="co">#&#39; @return time_indicator length N_bin factor indicating the time of the data points </span></span>
+<span id="cb21-11"><a href="the-method.html#cb21-11" tabindex="-1"></a><span class="co">#&#39; @return N the total number of observations of Y_i^(t) in Y </span></span>
+<span id="cb21-12"><a href="the-method.html#cb21-12" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb21-13"><a href="the-method.html#cb21-13" tabindex="-1"></a>binningY_d1 <span class="ot">=</span> <span class="cf">function</span>(X,</span>
+<span id="cb21-14"><a href="the-method.html#cb21-14" tabindex="-1"></a>                       Y, </span>
+<span id="cb21-15"><a href="the-method.html#cb21-15" tabindex="-1"></a>                       <span class="at">B =</span> <span class="dv">40</span>,</span>
+<span id="cb21-16"><a href="the-method.html#cb21-16" tabindex="-1"></a>                       <span class="at">min_count_ratio =</span> <span class="dv">0</span>){ <span class="co"># now, it only works for d = 1</span></span>
+<span id="cb21-17"><a href="the-method.html#cb21-17" tabindex="-1"></a>  TT <span class="ot">=</span> <span class="fu">length</span>(Y)</span>
+<span id="cb21-18"><a href="the-method.html#cb21-18" tabindex="-1"></a>  p <span class="ot">=</span> <span class="fu">dim</span>(X)[<span class="dv">2</span>]</span>
+<span id="cb21-19"><a href="the-method.html#cb21-19" tabindex="-1"></a>  </span>
+<span id="cb21-20"><a href="the-method.html#cb21-20" tabindex="-1"></a>  Y_range <span class="ot">=</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(Y, range))</span>
+<span id="cb21-21"><a href="the-method.html#cb21-21" tabindex="-1"></a>  minY <span class="ot">=</span> <span class="fu">min</span>(Y_range)</span>
+<span id="cb21-22"><a href="the-method.html#cb21-22" tabindex="-1"></a>  maxY <span class="ot">=</span> <span class="fu">max</span>(Y_range)</span>
+<span id="cb21-23"><a href="the-method.html#cb21-23" tabindex="-1"></a>  bin <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from=</span>minY, <span class="at">to=</span>maxY, <span class="at">length=</span> B <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb21-24"><a href="the-method.html#cb21-24" tabindex="-1"></a>  binnedY <span class="ot">=</span> <span class="fu">lapply</span>(Y, findInterval, bin, <span class="at">rightmost.closed =</span> T)</span>
+<span id="cb21-25"><a href="the-method.html#cb21-25" tabindex="-1"></a>  binnedY <span class="ot">=</span> <span class="fu">lapply</span>(binnedY, factor, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span>B)</span>
+<span id="cb21-26"><a href="the-method.html#cb21-26" tabindex="-1"></a>  count <span class="ot">=</span> <span class="fu">lapply</span>(binnedY, table)</span>
+<span id="cb21-27"><a href="the-method.html#cb21-27" tabindex="-1"></a>  N <span class="ot">=</span> <span class="fu">do.call</span>(sum, <span class="fu">lapply</span>(count, sum))</span>
+<span id="cb21-28"><a href="the-method.html#cb21-28" tabindex="-1"></a>  mid <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, B)</span>
+<span id="cb21-29"><a href="the-method.html#cb21-29" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B){</span>
+<span id="cb21-30"><a href="the-method.html#cb21-30" tabindex="-1"></a>    mid[i] <span class="ot">=</span> (bin[i<span class="sc">+</span><span class="dv">1</span>] <span class="sc">+</span> bin[i])<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb21-31"><a href="the-method.html#cb21-31" tabindex="-1"></a>  }</span>
+<span id="cb21-32"><a href="the-method.html#cb21-32" tabindex="-1"></a></span>
+<span id="cb21-33"><a href="the-method.html#cb21-33" tabindex="-1"></a>  <span class="co"># resizing</span></span>
+<span id="cb21-34"><a href="the-method.html#cb21-34" tabindex="-1"></a>  Y_bin <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb21-35"><a href="the-method.html#cb21-35" tabindex="-1"></a>  Y_count <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb21-36"><a href="the-method.html#cb21-36" tabindex="-1"></a>  X_bin <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb21-37"><a href="the-method.html#cb21-37" tabindex="-1"></a>  time_indicator <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb21-38"><a href="the-method.html#cb21-38" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>TT){</span>
+<span id="cb21-39"><a href="the-method.html#cb21-39" tabindex="-1"></a>    tbl <span class="ot">=</span> count[[t]]</span>
+<span id="cb21-40"><a href="the-method.html#cb21-40" tabindex="-1"></a>    count_nonzero <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb21-41"><a href="the-method.html#cb21-41" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>B){</span>
+<span id="cb21-42"><a href="the-method.html#cb21-42" tabindex="-1"></a>      <span class="cf">if</span> (tbl[j] <span class="sc">&gt;</span> N<span class="sc">*</span>min_count_ratio<span class="sc">/</span>TT){</span>
+<span id="cb21-43"><a href="the-method.html#cb21-43" tabindex="-1"></a>        Y_bin <span class="ot">=</span> <span class="fu">c</span>(Y_bin, <span class="fu">c</span>(mid[j]))</span>
+<span id="cb21-44"><a href="the-method.html#cb21-44" tabindex="-1"></a>        Y_count <span class="ot">=</span> <span class="fu">c</span>(Y_count, tbl[j])</span>
+<span id="cb21-45"><a href="the-method.html#cb21-45" tabindex="-1"></a>        count_nonzero <span class="ot">=</span> count_nonzero <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb21-46"><a href="the-method.html#cb21-46" tabindex="-1"></a>      }</span>
+<span id="cb21-47"><a href="the-method.html#cb21-47" tabindex="-1"></a>    }</span>
+<span id="cb21-48"><a href="the-method.html#cb21-48" tabindex="-1"></a>    time_indicator <span class="ot">=</span> <span class="fu">c</span>(time_indicator, <span class="fu">rep</span>(t, count_nonzero))</span>
+<span id="cb21-49"><a href="the-method.html#cb21-49" tabindex="-1"></a>    new_row <span class="ot">=</span> <span class="fu">t</span>(<span class="fu">matrix</span>(<span class="fu">rep</span>(X[t,], count_nonzero), <span class="at">nrow =</span> p))</span>
+<span id="cb21-50"><a href="the-method.html#cb21-50" tabindex="-1"></a>    X_bin <span class="ot">=</span> <span class="fu">rbind</span>(X_bin, new_row)</span>
+<span id="cb21-51"><a href="the-method.html#cb21-51" tabindex="-1"></a>  }</span>
+<span id="cb21-52"><a href="the-method.html#cb21-52" tabindex="-1"></a>  Y_bin <span class="ot">=</span> <span class="fu">matrix</span>(Y_bin, <span class="at">ncol =</span> <span class="dv">1</span>)</span>
+<span id="cb21-53"><a href="the-method.html#cb21-53" tabindex="-1"></a>  time_indicator <span class="ot">=</span> <span class="fu">factor</span>(time_indicator)</span>
+<span id="cb21-54"><a href="the-method.html#cb21-54" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">Y_bin =</span> Y_bin, </span>
+<span id="cb21-55"><a href="the-method.html#cb21-55" tabindex="-1"></a>         <span class="at">Y_count =</span> Y_count,</span>
+<span id="cb21-56"><a href="the-method.html#cb21-56" tabindex="-1"></a>         <span class="at">X_bin =</span> X_bin,</span>
+<span id="cb21-57"><a href="the-method.html#cb21-57" tabindex="-1"></a>         <span class="at">time_indicator =</span> time_indicator,</span>
+<span id="cb21-58"><a href="the-method.html#cb21-58" tabindex="-1"></a>         <span class="at">N =</span> N</span>
+<span id="cb21-59"><a href="the-method.html#cb21-59" tabindex="-1"></a>         ))</span>
+<span id="cb21-60"><a href="the-method.html#cb21-60" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="the-method.html#cb22-1" tabindex="-1"></a>B <span class="ot">=</span> <span class="dv">40</span></span>
+<span id="cb22-2"><a href="the-method.html#cb22-2" tabindex="-1"></a>K <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb22-3"><a href="the-method.html#cb22-3" tabindex="-1"></a>r_bar <span class="ot">=</span> <span class="fl">1e-3</span></span>
+<span id="cb22-4"><a href="the-method.html#cb22-4" tabindex="-1"></a>lambda_theta <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb22-5"><a href="the-method.html#cb22-5" tabindex="-1"></a>lambda_alpha <span class="ot">=</span> <span class="fl">1e-8</span></span>
+<span id="cb22-6"><a href="the-method.html#cb22-6" tabindex="-1"></a>min_count_ratio <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb22-7"><a href="the-method.html#cb22-7" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">dim</span>(X)[<span class="dv">2</span>]</span>
+<span id="cb22-8"><a href="the-method.html#cb22-8" tabindex="-1"></a><a href='the-method.html#preprocessing'>&lt;&lt;preprocessing&gt;&gt;</a></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="the-method.html#cb23-1" tabindex="-1"></a><span class="do"><span id='preprocessing'>###&quot;preprocessing&quot;###</span></span></span>
+<span id="cb23-2"><a href="the-method.html#cb23-2" tabindex="-1"></a>  binnedY <span class="ot">=</span> <span class="fu">binningY_d1</span>(X, Y, B, min_count_ratio)</span>
+<span id="cb23-3"><a href="the-method.html#cb23-3" tabindex="-1"></a>  Y_bin <span class="ot">=</span> binnedY<span class="sc">$</span>Y_bin</span>
+<span id="cb23-4"><a href="the-method.html#cb23-4" tabindex="-1"></a>  Y_count <span class="ot">=</span> binnedY<span class="sc">$</span>Y_count</span>
+<span id="cb23-5"><a href="the-method.html#cb23-5" tabindex="-1"></a>  X_bin <span class="ot">=</span> binnedY<span class="sc">$</span>X_bin</span>
+<span id="cb23-6"><a href="the-method.html#cb23-6" tabindex="-1"></a>  time_indicator <span class="ot">=</span> binnedY<span class="sc">$</span>time_indicator</span>
+<span id="cb23-7"><a href="the-method.html#cb23-7" tabindex="-1"></a>  N <span class="ot">=</span> binnedY<span class="sc">$</span>N</span>
+<span id="cb23-8"><a href="the-method.html#cb23-8" tabindex="-1"></a>  p <span class="ot">=</span> <span class="fu">dim</span>(X_bin)[<span class="dv">2</span>]</span></code></pre></div>
+<p>We can see that the length of Y are reduced significantly after binning</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="the-method.html#cb24-1" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unlist</span>(Y))</span>
+<span id="cb24-2"><a href="the-method.html#cb24-2" tabindex="-1"></a><span class="fu">length</span>(Y_bin)</span>
+<span id="cb24-3"><a href="the-method.html#cb24-3" tabindex="-1"></a><span class="fu">dim</span>(X_bin)</span></code></pre></div>
+<p>Let’s have a look at what the binning does on our example data.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="the-method.html#cb25-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&#39;s&#39;</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb25-2"><a href="the-method.html#cb25-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, TT), <span class="at">ylim =</span> <span class="fu">range</span>(Y_bin), <span class="at">col =</span> <span class="st">&#39;white&#39;</span>)</span>
+<span id="cb25-3"><a href="the-method.html#cb25-3" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>TT){</span>
+<span id="cb25-4"><a href="the-method.html#cb25-4" tabindex="-1"></a>  index <span class="ot">=</span> time_indicator <span class="sc">==</span> t</span>
+<span id="cb25-5"><a href="the-method.html#cb25-5" tabindex="-1"></a>  <span class="fu">points</span>(<span class="fu">rep</span>(t, <span class="fu">sum</span>(index)), Y_bin[index], <span class="at">cex =</span> Y_count[index]<span class="sc">/</span><span class="fu">mean</span>(Y_count))</span>
+<span id="cb25-6"><a href="the-method.html#cb25-6" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="initialization" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Initialization<a href="the-method.html#initialization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To initialize <span class="math inline">\(\theta\)</span> and responsibilities, we fit a Gaussian mixture of regressions model. We use <code>flexmix</code> to do this. Here, each point has <code>weight</code>, which is its <code>resp</code> multiplied by its <code>Y_count</code>. We are thresholding on the weights so that if weights is smaller than <code>r_bar</code>, we consider it to be zero so that we don’t take them account into our algorithm. <code>idx</code> indicates that whether the corresponding weight are above the threshold or not. If <code>idx</code> is <code>FALSE</code>, we don’t consider the corresponding point.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="the-method.html#cb26-1" tabindex="-1"></a><span class="do"><span id='initialize-with-flexmix'>###&quot;initialize-with-flexmix&quot;###</span></span></span>
+<span id="cb26-2"><a href="the-method.html#cb26-2" tabindex="-1"></a>  <span class="co"># note that it is for d = 1</span></span>
+<span id="cb26-3"><a href="the-method.html#cb26-3" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="the-method.html#cb26-4" tabindex="-1"></a>  <span class="co"># use flexmix to get initial resp, theta:</span></span>
+<span id="cb26-5"><a href="the-method.html#cb26-5" tabindex="-1"></a>  flex <span class="ot">=</span> flexmix<span class="sc">::</span><span class="fu">flexmix</span>(Y_bin <span class="sc">~</span> X_bin, <span class="at">k =</span> K, <span class="at">weights =</span> <span class="fu">as.vector</span>(Y_count))</span>
+<span id="cb26-6"><a href="the-method.html#cb26-6" tabindex="-1"></a>  </span>
+<span id="cb26-7"><a href="the-method.html#cb26-7" tabindex="-1"></a>  <span class="co"># initial responsibility</span></span>
+<span id="cb26-8"><a href="the-method.html#cb26-8" tabindex="-1"></a>  resp_init <span class="ot">=</span> flexmix<span class="sc">::</span><span class="fu">posterior</span>(flex) </span>
+<span id="cb26-9"><a href="the-method.html#cb26-9" tabindex="-1"></a>  </span>
+<span id="cb26-10"><a href="the-method.html#cb26-10" tabindex="-1"></a>  <span class="co"># thresholding after resp * Y_count</span></span>
+<span id="cb26-11"><a href="the-method.html#cb26-11" tabindex="-1"></a>  weight_init <span class="ot">=</span> resp_init <span class="sc">*</span> Y_count</span>
+<span id="cb26-12"><a href="the-method.html#cb26-12" tabindex="-1"></a>  idx_init <span class="ot">=</span> weight_init <span class="sc">&gt;</span> r_bar</span>
+<span id="cb26-13"><a href="the-method.html#cb26-13" tabindex="-1"></a>  </span>
+<span id="cb26-14"><a href="the-method.html#cb26-14" tabindex="-1"></a>  <span class="co"># theta initialization</span></span>
+<span id="cb26-15"><a href="the-method.html#cb26-15" tabindex="-1"></a>  theta0_init <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb26-16"><a href="the-method.html#cb26-16" tabindex="-1"></a>  theta_init <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb26-17"><a href="the-method.html#cb26-17" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb26-18"><a href="the-method.html#cb26-18" tabindex="-1"></a>    theta0_init[[k]] <span class="ot">=</span> flexmix<span class="sc">::</span><span class="fu">parameters</span>(flex, <span class="at">comp =</span> k)[<span class="dv">1</span>]</span>
+<span id="cb26-19"><a href="the-method.html#cb26-19" tabindex="-1"></a>    theta_init[[k]] <span class="ot">=</span> <span class="fu">matrix</span>(flexmix<span class="sc">::</span><span class="fu">parameters</span>(flex, <span class="at">comp =</span> k)[<span class="dv">2</span><span class="sc">:</span>(p<span class="sc">+</span><span class="dv">1</span>)])</span>
+<span id="cb26-20"><a href="the-method.html#cb26-20" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="the-method.html#cb27-1" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">&quot;flexmix&quot;</span>)</span>
+<span id="cb27-2"><a href="the-method.html#cb27-2" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">&quot;LogConcDEAD&quot;</span>)</span>
+<span id="cb27-3"><a href="the-method.html#cb27-3" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">&quot;glmnet&quot;</span>)</span></code></pre></div>
+<pre><code>## ✔ Adding &#39;flexmix&#39; to Imports field in DESCRIPTION
+## • Refer to functions with `flexmix::fun()`</code></pre>
+<pre><code>## ✔ Adding &#39;LogConcDEAD&#39; to Imports field in DESCRIPTION
+## • Refer to functions with `LogConcDEAD::fun()`</code></pre>
+<pre><code>## ✔ Adding &#39;glmnet&#39; to Imports field in DESCRIPTION
+## • Refer to functions with `glmnet::fun()`</code></pre>
+<p>Later in <code>Mstep_g</code>, we want to make sure that the weighted sum of residuals w.r.t. <code>weight</code>. This guarantees the resulting mlecld <span class="math inline">\(g\)</span> of <code>Mstep_g</code> has a zero mean. Normally, the weighted sum of residuals w.r.t. <code>weight</code> is not zero, so we want to shift the <span class="math inline">\(\theta_0\)</span> so that <span class="math inline">\(\theta_0\)</span> is ‘centered’</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="the-method.html#cb31-1" tabindex="-1"></a><span class="do"><span id='X_bin-param'>###&quot;X_bin-param&quot;###</span></span></span>
+<span id="cb31-2"><a href="the-method.html#cb31-2" tabindex="-1"></a><span class="co">#&#39; @param X_bin N_bin-by-p matrix, which is expanded version of X so that its dimension agrees with Y_bin&#39;s </span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="the-method.html#cb32-1" tabindex="-1"></a><span class="do"><span id='Y_bin-param'>###&quot;Y_bin-param&quot;###</span></span></span>
+<span id="cb32-2"><a href="the-method.html#cb32-2" tabindex="-1"></a><span class="co">#&#39; @param Y_bin N_bin-by-d matrix, indicating the center of the bin</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="the-method.html#cb33-1" tabindex="-1"></a><span class="do"><span id='weight-param'>###&quot;weight-param&quot;###</span></span></span>
+<span id="cb33-2"><a href="the-method.html#cb33-2" tabindex="-1"></a><span class="co">#&#39; @param weight N_bin by K matrix. weight[i, k] represents weight of ith residual for kth group</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="the-method.html#cb34-1" tabindex="-1"></a><span class="do"><span id='idx-param'>###&quot;idx-param&quot;###</span></span></span>
+<span id="cb34-2"><a href="the-method.html#cb34-2" tabindex="-1"></a><span class="co">#&#39; @param idx N_bin by K logical matrix. idx[i, k] represents whether the corresponding weight is above r_bar</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="the-method.html#cb35-1" tabindex="-1"></a><span class="co">#&#39; Mstep_shift (d = 1)</span></span>
+<span id="cb35-2"><a href="the-method.html#cb35-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb35-3"><a href="the-method.html#cb35-3" tabindex="-1"></a><a href='the-method.html#X_bin-param'>&lt;&lt;X_bin-param&gt;&gt;</a></span>
+<span id="cb35-4"><a href="the-method.html#cb35-4" tabindex="-1"></a><a href='the-method.html#Y_bin-param'>&lt;&lt;Y_bin-param&gt;&gt;</a></span>
+<span id="cb35-5"><a href="the-method.html#cb35-5" tabindex="-1"></a><a href='the-model.html#theta-param'>&lt;&lt;theta-param&gt;&gt;</a></span>
+<span id="cb35-6"><a href="the-method.html#cb35-6" tabindex="-1"></a><a href='the-method.html#weight-param'>&lt;&lt;weight-param&gt;&gt;</a></span>
+<span id="cb35-7"><a href="the-method.html#cb35-7" tabindex="-1"></a><a href='the-method.html#idx-param'>&lt;&lt;idx-param&gt;&gt;</a></span>
+<span id="cb35-8"><a href="the-method.html#cb35-8" tabindex="-1"></a><a href='the-method.html#K-param'>&lt;&lt;K-param&gt;&gt;</a></span>
+<span id="cb35-9"><a href="the-method.html#cb35-9" tabindex="-1"></a><span class="co">#&#39; @return theta0 length K list, with `theta0[[k]]` being the estimate for the intercept coefficient</span></span>
+<span id="cb35-10"><a href="the-method.html#cb35-10" tabindex="-1"></a><span class="co">#&#39; of the regression for kth group</span></span>
+<span id="cb35-11"><a href="the-method.html#cb35-11" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb35-12"><a href="the-method.html#cb35-12" tabindex="-1"></a>Mstep_shift <span class="ot">=</span> <span class="cf">function</span>(X_bin,</span>
+<span id="cb35-13"><a href="the-method.html#cb35-13" tabindex="-1"></a>                       Y_bin,</span>
+<span id="cb35-14"><a href="the-method.html#cb35-14" tabindex="-1"></a>                       theta, </span>
+<span id="cb35-15"><a href="the-method.html#cb35-15" tabindex="-1"></a>                       weight,</span>
+<span id="cb35-16"><a href="the-method.html#cb35-16" tabindex="-1"></a>                       idx,</span>
+<span id="cb35-17"><a href="the-method.html#cb35-17" tabindex="-1"></a>                       K){</span>
+<span id="cb35-18"><a href="the-method.html#cb35-18" tabindex="-1"></a>  theta0 <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb35-19"><a href="the-method.html#cb35-19" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb35-20"><a href="the-method.html#cb35-20" tabindex="-1"></a>    idx_k <span class="ot">=</span> idx[,k] </span>
+<span id="cb35-21"><a href="the-method.html#cb35-21" tabindex="-1"></a>    <span class="co"># except for the intercept term</span></span>
+<span id="cb35-22"><a href="the-method.html#cb35-22" tabindex="-1"></a>    theta0[[k]] <span class="ot">=</span> <span class="fu">t</span>(Y_bin[idx_k,] <span class="sc">-</span> X_bin[idx_k,] <span class="sc">%*%</span> <span class="fu">as.matrix</span>(theta[[k]])) <span class="sc">%*%</span> weight[idx_k,k] <span class="sc">/</span> <span class="fu">sum</span>(weight[idx_k,k])</span>
+<span id="cb35-23"><a href="the-method.html#cb35-23" tabindex="-1"></a>  }</span>
+<span id="cb35-24"><a href="the-method.html#cb35-24" tabindex="-1"></a>  <span class="fu">return</span>(theta0)</span>
+<span id="cb35-25"><a href="the-method.html#cb35-25" tabindex="-1"></a>}</span></code></pre></div>
+<p>Using this initial responsibility, we can initialize <span class="math inline">\(\alpha\)</span>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="the-method.html#cb36-1" tabindex="-1"></a><span class="co">#&#39; updating alpha</span></span>
+<span id="cb36-2"><a href="the-method.html#cb36-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb36-3"><a href="the-method.html#cb36-3" tabindex="-1"></a><a href='the-model.html#X-param'>&lt;&lt;X-param&gt;&gt;</a></span>
+<span id="cb36-4"><a href="the-method.html#cb36-4" tabindex="-1"></a><a href='the-method.html#weight-param'>&lt;&lt;weight-param&gt;&gt;</a></span>
+<span id="cb36-5"><a href="the-method.html#cb36-5" tabindex="-1"></a><a href='the-method.html#lambda_alpha-param'>&lt;&lt;lambda_alpha-param&gt;&gt;</a></span>
+<span id="cb36-6"><a href="the-method.html#cb36-6" tabindex="-1"></a><span class="co">#&#39; @param time_indicator length N_bin factor indicating the time of the data points </span></span>
+<span id="cb36-7"><a href="the-method.html#cb36-7" tabindex="-1"></a><span class="co">#&#39; @return alpha (p+1)-by-K matrix. The coefficients for the cluster probabilities.</span></span>
+<span id="cb36-8"><a href="the-method.html#cb36-8" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb36-9"><a href="the-method.html#cb36-9" tabindex="-1"></a>Mstep_alpha <span class="ot">=</span> <span class="cf">function</span>(X,</span>
+<span id="cb36-10"><a href="the-method.html#cb36-10" tabindex="-1"></a>                       weight,</span>
+<span id="cb36-11"><a href="the-method.html#cb36-11" tabindex="-1"></a>                       lambda_alpha,</span>
+<span id="cb36-12"><a href="the-method.html#cb36-12" tabindex="-1"></a>                       time_indicator){</span>
+<span id="cb36-13"><a href="the-method.html#cb36-13" tabindex="-1"></a>  lambda_max <span class="ot">=</span> lambda_alpha <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb36-14"><a href="the-method.html#cb36-14" tabindex="-1"></a>  lambdas <span class="ot">=</span> <span class="fu">exp</span>(<span class="fu">seq</span>(<span class="at">from =</span> <span class="fu">log</span>(lambda_max), <span class="at">to =</span> <span class="fu">log</span>(lambda_alpha), <span class="at">length =</span> <span class="dv">30</span>))</span>
+<span id="cb36-15"><a href="the-method.html#cb36-15" tabindex="-1"></a>  weight.sum <span class="ot">=</span> <span class="fu">apply</span>(weight, <span class="dv">2</span>, tapply, time_indicator, sum)</span>
+<span id="cb36-16"><a href="the-method.html#cb36-16" tabindex="-1"></a>  fit <span class="ot">=</span> glmnet<span class="sc">::</span><span class="fu">glmnet</span>(<span class="at">x =</span> X,</span>
+<span id="cb36-17"><a href="the-method.html#cb36-17" tabindex="-1"></a>                        <span class="at">y =</span> weight.sum,</span>
+<span id="cb36-18"><a href="the-method.html#cb36-18" tabindex="-1"></a>                        <span class="at">lambda =</span> lambdas,</span>
+<span id="cb36-19"><a href="the-method.html#cb36-19" tabindex="-1"></a>                        <span class="at">family =</span> <span class="st">&quot;multinomial&quot;</span>,</span>
+<span id="cb36-20"><a href="the-method.html#cb36-20" tabindex="-1"></a>                        <span class="at">intercept =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-21"><a href="the-method.html#cb36-21" tabindex="-1"></a>  coefs <span class="ot">=</span> glmnet<span class="sc">::</span><span class="fu">coef.glmnet</span>(fit, <span class="at">s =</span> lambda_alpha)</span>
+<span id="cb36-22"><a href="the-method.html#cb36-22" tabindex="-1"></a>  alpha <span class="ot">=</span> <span class="fu">as.matrix</span>(<span class="fu">do.call</span>(cbind, coefs))</span>
+<span id="cb36-23"><a href="the-method.html#cb36-23" tabindex="-1"></a>  <span class="fu">return</span>(alpha)  <span class="co"># (p+1) by K matrix</span></span>
+<span id="cb36-24"><a href="the-method.html#cb36-24" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now we make a separate function to calculate residuals, since we are going to use it pretty often.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="the-method.html#cb37-1" tabindex="-1"></a><span class="co">#&#39; calculating residuals for each k</span></span>
+<span id="cb37-2"><a href="the-method.html#cb37-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb37-3"><a href="the-method.html#cb37-3" tabindex="-1"></a><a href='the-method.html#X_bin-param'>&lt;&lt;X_bin-param&gt;&gt;</a></span>
+<span id="cb37-4"><a href="the-method.html#cb37-4" tabindex="-1"></a><a href='the-method.html#Y_bin-param'>&lt;&lt;Y_bin-param&gt;&gt;</a></span>
+<span id="cb37-5"><a href="the-method.html#cb37-5" tabindex="-1"></a><a href='the-model.html#theta0-param'>&lt;&lt;theta0-param&gt;&gt;</a></span>
+<span id="cb37-6"><a href="the-method.html#cb37-6" tabindex="-1"></a><a href='the-model.html#theta-param'>&lt;&lt;theta-param&gt;&gt;</a></span>
+<span id="cb37-7"><a href="the-method.html#cb37-7" tabindex="-1"></a><a href='the-method.html#K-param'>&lt;&lt;K-param&gt;&gt;</a></span>
+<span id="cb37-8"><a href="the-method.html#cb37-8" tabindex="-1"></a><span class="co">#&#39; @return length K list, with `resi0[[k]]` N_bin-by-d residual matrix</span></span>
+<span id="cb37-9"><a href="the-method.html#cb37-9" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb37-10"><a href="the-method.html#cb37-10" tabindex="-1"></a>calc_resi <span class="ot">=</span> <span class="cf">function</span>(X_bin,</span>
+<span id="cb37-11"><a href="the-method.html#cb37-11" tabindex="-1"></a>                     Y_bin,</span>
+<span id="cb37-12"><a href="the-method.html#cb37-12" tabindex="-1"></a>                     theta0, </span>
+<span id="cb37-13"><a href="the-method.html#cb37-13" tabindex="-1"></a>                     theta,</span>
+<span id="cb37-14"><a href="the-method.html#cb37-14" tabindex="-1"></a>                     K){</span>
+<span id="cb37-15"><a href="the-method.html#cb37-15" tabindex="-1"></a>  resi <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb37-16"><a href="the-method.html#cb37-16" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb37-17"><a href="the-method.html#cb37-17" tabindex="-1"></a>    resi[[k]] <span class="ot">=</span> Y_bin <span class="sc">-</span> <span class="fu">rep</span>(theta0[[k]], <span class="fu">dim</span>(X_bin)[<span class="dv">1</span>]) <span class="sc">-</span> X_bin <span class="sc">%*%</span> <span class="fu">matrix</span>(theta[[k]])</span>
+<span id="cb37-18"><a href="the-method.html#cb37-18" tabindex="-1"></a>  }</span>
+<span id="cb37-19"><a href="the-method.html#cb37-19" tabindex="-1"></a>  <span class="fu">return</span>(resi) <span class="co"># length K list, with `theta0[[k]]` N_bin-by-d residual matrix</span></span>
+<span id="cb37-20"><a href="the-method.html#cb37-20" tabindex="-1"></a>}</span></code></pre></div>
+<p>Finally, based on the residuals, we calculate the mlecld g.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="the-method.html#cb38-1" tabindex="-1"></a><span class="do"><span id='resi-param'>###&quot;resi-param&quot;###</span></span></span>
+<span id="cb38-2"><a href="the-method.html#cb38-2" tabindex="-1"></a><span class="co">#&#39; @param resi length K list, with `resi[[k]]` N_bin-by-d residual matrix</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="the-method.html#cb39-1" tabindex="-1"></a><span class="co">#&#39; updating `mlelcd` g&#39;s</span></span>
+<span id="cb39-2"><a href="the-method.html#cb39-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb39-3"><a href="the-method.html#cb39-3" tabindex="-1"></a><a href='the-method.html#resi-param'>&lt;&lt;resi-param&gt;&gt;</a></span>
+<span id="cb39-4"><a href="the-method.html#cb39-4" tabindex="-1"></a><a href='the-method.html#weight-param'>&lt;&lt;weight-param&gt;&gt;</a></span>
+<span id="cb39-5"><a href="the-method.html#cb39-5" tabindex="-1"></a><a href='the-method.html#idx-param'>&lt;&lt;idx-param&gt;&gt;</a></span>
+<span id="cb39-6"><a href="the-method.html#cb39-6" tabindex="-1"></a><a href='the-method.html#K-param'>&lt;&lt;K-param&gt;&gt;</a></span>
+<span id="cb39-7"><a href="the-method.html#cb39-7" tabindex="-1"></a><span class="co">#&#39; @return g length K list, with `g[[k]]` being `mlelcd` for the kth group</span></span>
+<span id="cb39-8"><a href="the-method.html#cb39-8" tabindex="-1"></a><span class="co">#&#39; @export </span></span>
+<span id="cb39-9"><a href="the-method.html#cb39-9" tabindex="-1"></a>Mstep_g <span class="ot">=</span> <span class="cf">function</span>(resi, </span>
+<span id="cb39-10"><a href="the-method.html#cb39-10" tabindex="-1"></a>                   weight, </span>
+<span id="cb39-11"><a href="the-method.html#cb39-11" tabindex="-1"></a>                   idx,</span>
+<span id="cb39-12"><a href="the-method.html#cb39-12" tabindex="-1"></a>                   K){</span>
+<span id="cb39-13"><a href="the-method.html#cb39-13" tabindex="-1"></a>  g <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb39-14"><a href="the-method.html#cb39-14" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb39-15"><a href="the-method.html#cb39-15" tabindex="-1"></a>    idx_k <span class="ot">=</span> idx[,k]</span>
+<span id="cb39-16"><a href="the-method.html#cb39-16" tabindex="-1"></a>    <span class="fu">suppressWarnings</span>({g[[k]] <span class="ot">=</span> LogConcDEAD<span class="sc">::</span><span class="fu">mlelcd</span>(resi[[k]][idx_k,], <span class="at">w =</span> weight[idx_k,k])})</span>
+<span id="cb39-17"><a href="the-method.html#cb39-17" tabindex="-1"></a>  }</span>
+<span id="cb39-18"><a href="the-method.html#cb39-18" tabindex="-1"></a>  <span class="fu">return</span>(g)</span>
+<span id="cb39-19"><a href="the-method.html#cb39-19" tabindex="-1"></a>}</span></code></pre></div>
+<p>Thus, the initialization part is as follows:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="the-method.html#cb40-1" tabindex="-1"></a><span class="do"><span id='initialization'>###&quot;initialization&quot;###</span></span></span>
+<span id="cb40-2"><a href="the-method.html#cb40-2" tabindex="-1"></a><a href='the-method.html#initialize-with-flexmix'>&lt;&lt;initialize-with-flexmix&gt;&gt;</a></span>
+<span id="cb40-3"><a href="the-method.html#cb40-3" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="the-method.html#cb40-4" tabindex="-1"></a>    <span class="do">## initial alpha</span></span>
+<span id="cb40-5"><a href="the-method.html#cb40-5" tabindex="-1"></a>    alpha_init <span class="ot">=</span> <span class="fu">Mstep_alpha</span>(X, weight_init, lambda_alpha, time_indicator)</span>
+<span id="cb40-6"><a href="the-method.html#cb40-6" tabindex="-1"></a>    </span>
+<span id="cb40-7"><a href="the-method.html#cb40-7" tabindex="-1"></a>    <span class="do">## initial theta shift</span></span>
+<span id="cb40-8"><a href="the-method.html#cb40-8" tabindex="-1"></a>    theta0_init <span class="ot">=</span> <span class="fu">Mstep_shift</span>(X_bin, Y_bin, theta_init, weight_init, idx_init, K)</span>
+<span id="cb40-9"><a href="the-method.html#cb40-9" tabindex="-1"></a>    resi_init <span class="ot">=</span> <span class="fu">calc_resi</span>(X_bin, Y_bin, theta0_init, theta_init, K)</span>
+<span id="cb40-10"><a href="the-method.html#cb40-10" tabindex="-1"></a>    </span>
+<span id="cb40-11"><a href="the-method.html#cb40-11" tabindex="-1"></a>    <span class="do">## initial g</span></span>
+<span id="cb40-12"><a href="the-method.html#cb40-12" tabindex="-1"></a>    g_init <span class="ot">=</span> <span class="fu">Mstep_g</span>(resi_init, weight_init, idx_init, K)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="the-method.html#cb41-1" tabindex="-1"></a><span class="co">#library(flexmix)</span></span>
+<span id="cb41-2"><a href="the-method.html#cb41-2" tabindex="-1"></a><a href='the-method.html#initialization'>&lt;&lt;initialization&gt;&gt;</a></span></code></pre></div>
+<p>This is how initial residuals for each group look like.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="the-method.html#cb42-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&#39;s&#39;</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb42-2"><a href="the-method.html#cb42-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, TT), <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">unlist</span>(resi_init)), <span class="at">col =</span> <span class="st">&#39;white&#39;</span>)</span>
+<span id="cb42-3"><a href="the-method.html#cb42-3" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>TT){</span>
+<span id="cb42-4"><a href="the-method.html#cb42-4" tabindex="-1"></a>  index <span class="ot">=</span> time_indicator <span class="sc">==</span> t</span>
+<span id="cb42-5"><a href="the-method.html#cb42-5" tabindex="-1"></a>  <span class="fu">points</span>(<span class="fu">rep</span>(t, <span class="fu">sum</span>(index)), resi_init[[<span class="dv">1</span>]][index])</span>
+<span id="cb42-6"><a href="the-method.html#cb42-6" tabindex="-1"></a>}</span>
+<span id="cb42-7"><a href="the-method.html#cb42-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, TT), <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">unlist</span>(resi_init)), <span class="at">col =</span> <span class="st">&#39;white&#39;</span>)</span>
+<span id="cb42-8"><a href="the-method.html#cb42-8" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>TT){</span>
+<span id="cb42-9"><a href="the-method.html#cb42-9" tabindex="-1"></a>  index <span class="ot">=</span> time_indicator <span class="sc">==</span> t</span>
+<span id="cb42-10"><a href="the-method.html#cb42-10" tabindex="-1"></a>  <span class="fu">points</span>(<span class="fu">rep</span>(t, <span class="fu">sum</span>(index)), resi_init[[<span class="dv">2</span>]][index])</span>
+<span id="cb42-11"><a href="the-method.html#cb42-11" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now, the points are magnified (or shrink) proportional to their weights</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="the-method.html#cb43-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&#39;s&#39;</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb43-2"><a href="the-method.html#cb43-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, TT), <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">unlist</span>(resi_init)), <span class="at">col =</span> <span class="st">&#39;white&#39;</span>)</span>
+<span id="cb43-3"><a href="the-method.html#cb43-3" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>TT){</span>
+<span id="cb43-4"><a href="the-method.html#cb43-4" tabindex="-1"></a>  index <span class="ot">=</span> time_indicator <span class="sc">==</span> t</span>
+<span id="cb43-5"><a href="the-method.html#cb43-5" tabindex="-1"></a>  <span class="fu">points</span>(<span class="fu">rep</span>(t, <span class="fu">sum</span>(index)), resi_init[[<span class="dv">1</span>]][index], <span class="at">cex =</span> weight_init[index,<span class="dv">1</span>]<span class="sc">/</span><span class="fu">mean</span>(Y_count))</span>
+<span id="cb43-6"><a href="the-method.html#cb43-6" tabindex="-1"></a>}</span>
+<span id="cb43-7"><a href="the-method.html#cb43-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, TT), <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">unlist</span>(resi_init)), <span class="at">col =</span> <span class="st">&#39;white&#39;</span>)</span>
+<span id="cb43-8"><a href="the-method.html#cb43-8" tabindex="-1"></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>TT){</span>
+<span id="cb43-9"><a href="the-method.html#cb43-9" tabindex="-1"></a>  index <span class="ot">=</span> time_indicator <span class="sc">==</span> t</span>
+<span id="cb43-10"><a href="the-method.html#cb43-10" tabindex="-1"></a>  <span class="fu">points</span>(<span class="fu">rep</span>(t, <span class="fu">sum</span>(index)), resi_init[[<span class="dv">2</span>]][index], <span class="at">cex =</span> weight_init[index,<span class="dv">2</span>]<span class="sc">/</span><span class="fu">mean</span>(Y_count))</span>
+<span id="cb43-11"><a href="the-method.html#cb43-11" tabindex="-1"></a>}</span></code></pre></div>
+<p>Here are the plots of initial g’s</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="the-method.html#cb44-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&#39;s&#39;</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb44-2"><a href="the-method.html#cb44-2" tabindex="-1"></a><span class="fu">plot</span>(g_init[[<span class="dv">1</span>]])</span>
+<span id="cb44-3"><a href="the-method.html#cb44-3" tabindex="-1"></a><span class="fu">plot</span>(g_init[[<span class="dv">2</span>]])</span></code></pre></div>
+<p>The black curves in the left plot are made using initial estimates for <span class="math inline">\(\theta_0\)</span> and <span class="math inline">\(\theta\)</span>. The right plot is the true plot that we saw before.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="the-method.html#cb45-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&#39;s&#39;</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb45-2"><a href="the-method.html#cb45-2" tabindex="-1"></a><a href='the-model.html#plot_data_and_model'>plot_data_and_model</a>(X, Y, Z, theta0_init, theta_init)</span>
+<span id="cb45-3"><a href="the-method.html#cb45-3" tabindex="-1"></a><a href='the-model.html#plot_data_and_model'>plot_data_and_model</a>(X, Y, Z, theta0_true, theta_true)</span></code></pre></div>
+<p>They are initial <span class="math inline">\(\theta_0\)</span> and <span class="math inline">\(\theta\)</span></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="the-method.html#cb46-1" tabindex="-1"></a><span class="fu">print</span>(theta0_init)</span>
+<span id="cb46-2"><a href="the-method.html#cb46-2" tabindex="-1"></a><span class="fu">print</span>(theta_init)</span></code></pre></div>
+<p>We also need some other functions to calculate <span class="math inline">\(\pi_{tk}(\hat \alpha)\)</span> and surrogate loglikelihood <span class="math inline">\(Q\)</span></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="the-method.html#cb47-1" tabindex="-1"></a><span class="co">#&#39; calculating \pi_{tk}(\alpha) = P(Z_i^{(t)} = k| X^(t))</span></span>
+<span id="cb47-2"><a href="the-method.html#cb47-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb47-3"><a href="the-method.html#cb47-3" tabindex="-1"></a><a href='the-method.html#X_bin-param'>&lt;&lt;X_bin-param&gt;&gt;</a></span>
+<span id="cb47-4"><a href="the-method.html#cb47-4" tabindex="-1"></a><a href='the-model.html#alpha-param'>&lt;&lt;alpha-param&gt;&gt;</a></span>
+<span id="cb47-5"><a href="the-method.html#cb47-5" tabindex="-1"></a><span class="co">#&#39; @return pi_k N_bin-by-K matrix with `pi_k[i,k]` indicates P(Z_i = k| X^(t))</span></span>
+<span id="cb47-6"><a href="the-method.html#cb47-6" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb47-7"><a href="the-method.html#cb47-7" tabindex="-1"></a>pi_k <span class="ot">=</span> <span class="cf">function</span>(X_bin, alpha){</span>
+<span id="cb47-8"><a href="the-method.html#cb47-8" tabindex="-1"></a>  p <span class="ot">=</span> <span class="fu">dim</span>(X_bin)[<span class="dv">2</span>]</span>
+<span id="cb47-9"><a href="the-method.html#cb47-9" tabindex="-1"></a>  tmp <span class="ot">=</span> <span class="fu">exp</span>(alpha[<span class="dv">1</span>,] <span class="sc">+</span> X_bin <span class="sc">%*%</span> alpha[<span class="dv">2</span><span class="sc">:</span>(p<span class="sc">+</span><span class="dv">1</span>),])</span>
+<span id="cb47-10"><a href="the-method.html#cb47-10" tabindex="-1"></a>  pi_k <span class="ot">=</span> tmp <span class="sc">/</span> <span class="fu">rowSums</span>(tmp) <span class="co"># N_bin by K matrix</span></span>
+<span id="cb47-11"><a href="the-method.html#cb47-11" tabindex="-1"></a>  <span class="fu">return</span>(pi_k) </span>
+<span id="cb47-12"><a href="the-method.html#cb47-12" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="the-method.html#cb48-1" tabindex="-1"></a><span class="do"><span id='g-param'>###&quot;g-param&quot;###</span></span></span>
+<span id="cb48-2"><a href="the-method.html#cb48-2" tabindex="-1"></a><span class="co">#&#39; @param g length K list, with `g[[k]]` being `mlelcd` for the kth group</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="the-method.html#cb49-1" tabindex="-1"></a><span class="co">#&#39; calculating the surrogate loglikelihood Q</span></span>
+<span id="cb49-2"><a href="the-method.html#cb49-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb49-3"><a href="the-method.html#cb49-3" tabindex="-1"></a><a href='the-method.html#X_bin-param'>&lt;&lt;X_bin-param&gt;&gt;</a></span>
+<span id="cb49-4"><a href="the-method.html#cb49-4" tabindex="-1"></a><a href='the-method.html#g-param'>&lt;&lt;g-param&gt;&gt;</a></span>
+<span id="cb49-5"><a href="the-method.html#cb49-5" tabindex="-1"></a><a href='the-method.html#resi-param'>&lt;&lt;resi-param&gt;&gt;</a></span>
+<span id="cb49-6"><a href="the-method.html#cb49-6" tabindex="-1"></a><a href='the-model.html#theta-param'>&lt;&lt;theta-param&gt;&gt;</a></span>
+<span id="cb49-7"><a href="the-method.html#cb49-7" tabindex="-1"></a><a href='the-model.html#alpha-param'>&lt;&lt;alpha-param&gt;&gt;</a></span>
+<span id="cb49-8"><a href="the-method.html#cb49-8" tabindex="-1"></a><a href='the-method.html#weight-param'>&lt;&lt;weight-param&gt;&gt;</a></span>
+<span id="cb49-9"><a href="the-method.html#cb49-9" tabindex="-1"></a><a href='the-method.html#idx-param'>&lt;&lt;idx-param&gt;&gt;</a></span>
+<span id="cb49-10"><a href="the-method.html#cb49-10" tabindex="-1"></a><a href='the-method.html#lambda_alpha-param'>&lt;&lt;lambda_alpha-param&gt;&gt;</a></span>
+<span id="cb49-11"><a href="the-method.html#cb49-11" tabindex="-1"></a><a href='the-method.html#lambda_theta-param'>&lt;&lt;lambda_theta-param&gt;&gt;</a></span>
+<span id="cb49-12"><a href="the-method.html#cb49-12" tabindex="-1"></a><a href='the-method.html#K-param'>&lt;&lt;K-param&gt;&gt;</a></span>
+<span id="cb49-13"><a href="the-method.html#cb49-13" tabindex="-1"></a><span class="co">#&#39; @param N the total number of observations of Y_i^(t) in Y </span></span>
+<span id="cb49-14"><a href="the-method.html#cb49-14" tabindex="-1"></a><span class="co">#&#39; @return Q the surrogate loglikelihood of the current parameters</span></span>
+<span id="cb49-15"><a href="the-method.html#cb49-15" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb49-16"><a href="the-method.html#cb49-16" tabindex="-1"></a><span class="co"># calculating the surrogate</span></span>
+<span id="cb49-17"><a href="the-method.html#cb49-17" tabindex="-1"></a>calc_surr <span class="ot">=</span> <span class="cf">function</span>(X_bin,</span>
+<span id="cb49-18"><a href="the-method.html#cb49-18" tabindex="-1"></a>                     g, </span>
+<span id="cb49-19"><a href="the-method.html#cb49-19" tabindex="-1"></a>                     resi, </span>
+<span id="cb49-20"><a href="the-method.html#cb49-20" tabindex="-1"></a>                     theta, </span>
+<span id="cb49-21"><a href="the-method.html#cb49-21" tabindex="-1"></a>                     alpha, </span>
+<span id="cb49-22"><a href="the-method.html#cb49-22" tabindex="-1"></a>                     weight, </span>
+<span id="cb49-23"><a href="the-method.html#cb49-23" tabindex="-1"></a>                     idx,</span>
+<span id="cb49-24"><a href="the-method.html#cb49-24" tabindex="-1"></a>                     lambda_alpha,</span>
+<span id="cb49-25"><a href="the-method.html#cb49-25" tabindex="-1"></a>                     lambda_theta,</span>
+<span id="cb49-26"><a href="the-method.html#cb49-26" tabindex="-1"></a>                     K,</span>
+<span id="cb49-27"><a href="the-method.html#cb49-27" tabindex="-1"></a>                     N){</span>
+<span id="cb49-28"><a href="the-method.html#cb49-28" tabindex="-1"></a>  P <span class="ot">=</span> <span class="fu">pi_k</span>(X_bin, alpha) <span class="co"># N_bin by K matrix</span></span>
+<span id="cb49-29"><a href="the-method.html#cb49-29" tabindex="-1"></a>  p <span class="ot">=</span> <span class="fu">dim</span>(X_bin)[<span class="dv">2</span>]</span>
+<span id="cb49-30"><a href="the-method.html#cb49-30" tabindex="-1"></a>  sum <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb49-31"><a href="the-method.html#cb49-31" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb49-32"><a href="the-method.html#cb49-32" tabindex="-1"></a>    tmp <span class="ot">=</span> weight[,k] <span class="sc">*</span> (LogConcDEAD<span class="sc">::</span><span class="fu">dlcd</span>(resi[[k]], g[[k]], <span class="at">uselog =</span> T) <span class="sc">+</span> <span class="fu">log</span>(P[,k]))</span>
+<span id="cb49-33"><a href="the-method.html#cb49-33" tabindex="-1"></a>    tmp[<span class="sc">!</span>idx[,k]] <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb49-34"><a href="the-method.html#cb49-34" tabindex="-1"></a>    sum <span class="ot">=</span> <span class="fu">cbind</span>(sum, tmp) <span class="co"># N_bin by K matrix</span></span>
+<span id="cb49-35"><a href="the-method.html#cb49-35" tabindex="-1"></a>  }</span>
+<span id="cb49-36"><a href="the-method.html#cb49-36" tabindex="-1"></a>  Q <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">rowSums</span>(sum)) <span class="sc">-</span> lambda_alpha <span class="sc">*</span> <span class="fu">sum</span>(<span class="fu">abs</span>(alpha[<span class="dv">2</span><span class="sc">:</span>(p<span class="sc">+</span><span class="dv">1</span>),])) <span class="sc">/</span> N <span class="sc">-</span> lambda_theta <span class="sc">*</span> <span class="fu">sum</span>(<span class="fu">abs</span>(<span class="fu">unlist</span>(theta))) <span class="sc">/</span> N</span>
+<span id="cb49-37"><a href="the-method.html#cb49-37" tabindex="-1"></a>  <span class="fu">return</span>(Q)</span>
+<span id="cb49-38"><a href="the-method.html#cb49-38" tabindex="-1"></a>}</span></code></pre></div>
+<p>It is the initial (surrogate) loglikelihood <code>Q</code></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="the-method.html#cb50-1" tabindex="-1"></a>Q <span class="ot">=</span> <span class="fu">calc_surr</span>(X_bin, g_init, resi_init, theta_init, alpha_init, weight_init, idx_init, lambda_alpha, lambda_theta, K, N)</span>
+<span id="cb50-2"><a href="the-method.html#cb50-2" tabindex="-1"></a><span class="fu">print</span>(Q)</span></code></pre></div>
+</div>
+<div id="e-step" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> E-step<a href="the-method.html#e-step" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Given an estimate of <span class="math inline">\((\alpha,\theta,g)\)</span>, the E-step computes for each <span class="math inline">\(Y_{i}^{(t)}\)</span> how “responsible” each cluster is for it. In particular, the responsibility vector <span class="math inline">\((\hat r_{ti1},\ldots,\hat r_{tiK})\)</span> is a probability vector. It is computed using Bayes rule:</p>
+<p><span class="math display">\[
+\hat r_{tik} = \hat  P(Z_i^{(t)}  = k |Y_i^{(t)} , X^{(t)} ; \hat \alpha, \hat \theta, \hat g)
+= \frac{exp(\hat g_k(Y_i^{(t)} -\hat \theta_{k0} -\hat \theta_k^T X^{(t)} )) \pi_{tk}(\hat \alpha)}
+{\sum_{l=1}^K exp(\hat g_l(Y_i^{(t)} -\hat \theta_{l0} -\hat \theta_l^T X^{(t)} )) \pi_{tl}(\hat \alpha) }
+\]</span></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="the-method.html#cb51-1" tabindex="-1"></a><span class="do"><span id='Y_count-param'>###&quot;Y_count-param&quot;###</span></span></span>
+<span id="cb51-2"><a href="the-method.html#cb51-2" tabindex="-1"></a><span class="co">#&#39; @param Y_count N_bin-vector indicating how many points belong to each bin</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="the-method.html#cb52-1" tabindex="-1"></a><span class="co">#&#39; Updating responsibility</span></span>
+<span id="cb52-2"><a href="the-method.html#cb52-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb52-3"><a href="the-method.html#cb52-3" tabindex="-1"></a><a href='the-method.html#X_bin-param'>&lt;&lt;X_bin-param&gt;&gt;</a></span>
+<span id="cb52-4"><a href="the-method.html#cb52-4" tabindex="-1"></a><a href='the-method.html#Y_count-param'>&lt;&lt;Y_count-param&gt;&gt;</a></span>
+<span id="cb52-5"><a href="the-method.html#cb52-5" tabindex="-1"></a><a href='the-method.html#resi-param'>&lt;&lt;resi-param&gt;&gt;</a></span>
+<span id="cb52-6"><a href="the-method.html#cb52-6" tabindex="-1"></a><a href='the-model.html#alpha-param'>&lt;&lt;alpha-param&gt;&gt;</a></span>
+<span id="cb52-7"><a href="the-method.html#cb52-7" tabindex="-1"></a><a href='the-method.html#g-param'>&lt;&lt;g-param&gt;&gt;</a></span>
+<span id="cb52-8"><a href="the-method.html#cb52-8" tabindex="-1"></a><a href='the-method.html#K-param'>&lt;&lt;K-param&gt;&gt;</a></span>
+<span id="cb52-9"><a href="the-method.html#cb52-9" tabindex="-1"></a><a href='the-method.html#r_bar-param'>&lt;&lt;r_bar-param&gt;&gt;</a></span>
+<span id="cb52-10"><a href="the-method.html#cb52-10" tabindex="-1"></a><span class="co">#&#39; @return resp N_bin by K matrix. `resp[i, k]` being the current estimate for P(Z_i = k|X, Y) </span></span>
+<span id="cb52-11"><a href="the-method.html#cb52-11" tabindex="-1"></a><span class="co">#&#39; @return weight N_bin by K matrix. weight[i, k] represents weight of ith residual for kth group</span></span>
+<span id="cb52-12"><a href="the-method.html#cb52-12" tabindex="-1"></a><span class="co">#&#39; @return idx N_bin by K logical matrix. idx[i, k] represents whether the corresponding weight is above r_bar</span></span>
+<span id="cb52-13"><a href="the-method.html#cb52-13" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb52-14"><a href="the-method.html#cb52-14" tabindex="-1"></a>E_step <span class="ot">=</span> <span class="cf">function</span>(X_bin,</span>
+<span id="cb52-15"><a href="the-method.html#cb52-15" tabindex="-1"></a>                  Y_count,</span>
+<span id="cb52-16"><a href="the-method.html#cb52-16" tabindex="-1"></a>                  resi, </span>
+<span id="cb52-17"><a href="the-method.html#cb52-17" tabindex="-1"></a>                  alpha, </span>
+<span id="cb52-18"><a href="the-method.html#cb52-18" tabindex="-1"></a>                  g,</span>
+<span id="cb52-19"><a href="the-method.html#cb52-19" tabindex="-1"></a>                  K,</span>
+<span id="cb52-20"><a href="the-method.html#cb52-20" tabindex="-1"></a>                  r_bar){</span>
+<span id="cb52-21"><a href="the-method.html#cb52-21" tabindex="-1"></a>  P <span class="ot">=</span> <span class="fu">pi_k</span>(X_bin, alpha)</span>
+<span id="cb52-22"><a href="the-method.html#cb52-22" tabindex="-1"></a>  sum <span class="ot">=</span> <span class="fu">c</span>()</span>
+<span id="cb52-23"><a href="the-method.html#cb52-23" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb52-24"><a href="the-method.html#cb52-24" tabindex="-1"></a>    tmp <span class="ot">=</span> LogConcDEAD<span class="sc">::</span><span class="fu">dlcd</span>(resi[[k]], g[[k]]) <span class="sc">*</span> P[,k]</span>
+<span id="cb52-25"><a href="the-method.html#cb52-25" tabindex="-1"></a>    sum <span class="ot">=</span> <span class="fu">cbind</span>(sum, tmp)</span>
+<span id="cb52-26"><a href="the-method.html#cb52-26" tabindex="-1"></a>  }</span>
+<span id="cb52-27"><a href="the-method.html#cb52-27" tabindex="-1"></a>  resp <span class="ot">=</span> sum<span class="sc">/</span><span class="fu">rowSums</span>(sum)</span>
+<span id="cb52-28"><a href="the-method.html#cb52-28" tabindex="-1"></a>  </span>
+<span id="cb52-29"><a href="the-method.html#cb52-29" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">sum</span>(<span class="fu">is.nan</span>(resp)) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb52-30"><a href="the-method.html#cb52-30" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;There are some NaN&#39;s in the new responsibilties&quot;</span>)</span>
+<span id="cb52-31"><a href="the-method.html#cb52-31" tabindex="-1"></a>  }</span>
+<span id="cb52-32"><a href="the-method.html#cb52-32" tabindex="-1"></a>  </span>
+<span id="cb52-33"><a href="the-method.html#cb52-33" tabindex="-1"></a>  weight <span class="ot">=</span> resp <span class="sc">*</span> Y_count</span>
+<span id="cb52-34"><a href="the-method.html#cb52-34" tabindex="-1"></a>  idx <span class="ot">=</span> weight <span class="sc">&gt;</span> r_bar</span>
+<span id="cb52-35"><a href="the-method.html#cb52-35" tabindex="-1"></a>  </span>
+<span id="cb52-36"><a href="the-method.html#cb52-36" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">resp =</span> resp,</span>
+<span id="cb52-37"><a href="the-method.html#cb52-37" tabindex="-1"></a>              <span class="at">weight =</span> weight,</span>
+<span id="cb52-38"><a href="the-method.html#cb52-38" tabindex="-1"></a>              <span class="at">idx =</span> idx</span>
+<span id="cb52-39"><a href="the-method.html#cb52-39" tabindex="-1"></a>              ))</span>
+<span id="cb52-40"><a href="the-method.html#cb52-40" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="the-method.html#cb53-1" tabindex="-1"></a><span class="do"><span id='E-step'>###&quot;E-step&quot;###</span></span></span>
+<span id="cb53-2"><a href="the-method.html#cb53-2" tabindex="-1"></a>  <span class="do">## E-step: update responsibilities</span></span>
+<span id="cb53-3"><a href="the-method.html#cb53-3" tabindex="-1"></a>  Estep <span class="ot">=</span> <span class="fu">E_step</span>(X_bin, Y_count, resi_old, alpha_old, g_old, K, r_bar)</span>
+<span id="cb53-4"><a href="the-method.html#cb53-4" tabindex="-1"></a>  resp_new <span class="ot">=</span> Estep<span class="sc">$</span>resp</span>
+<span id="cb53-5"><a href="the-method.html#cb53-5" tabindex="-1"></a>  weight_new <span class="ot">=</span> Estep<span class="sc">$</span>weight</span>
+<span id="cb53-6"><a href="the-method.html#cb53-6" tabindex="-1"></a>  idx_new <span class="ot">=</span> Estep<span class="sc">$</span>idx</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="the-method.html#cb54-1" tabindex="-1"></a>  idx_old <span class="ot">=</span> idx_init</span>
+<span id="cb54-2"><a href="the-method.html#cb54-2" tabindex="-1"></a>  resi_old <span class="ot">=</span> resi_init</span>
+<span id="cb54-3"><a href="the-method.html#cb54-3" tabindex="-1"></a>  alpha_old <span class="ot">=</span> alpha_init</span>
+<span id="cb54-4"><a href="the-method.html#cb54-4" tabindex="-1"></a>  g_old <span class="ot">=</span> g_init</span>
+<span id="cb54-5"><a href="the-method.html#cb54-5" tabindex="-1"></a><a href='the-method.html#E-step'>&lt;&lt;E-step&gt;&gt;</a></span></code></pre></div>
+<p>Let’s have a look at the responsibilities that we get after E-step. Here are some from the 1st time point:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="the-method.html#cb55-1" tabindex="-1"></a>resp_new[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, ]</span></code></pre></div>
+</div>
+<div id="m-step" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> M-step<a href="the-method.html#m-step" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the M-step, we update the estimates of <span class="math inline">\((\alpha,\theta,g)\)</span>:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="the-method.html#cb56-1" tabindex="-1"></a><span class="do"><span id='M-step'>###&quot;M-step&quot;###</span></span></span>
+<span id="cb56-2"><a href="the-method.html#cb56-2" tabindex="-1"></a>  <span class="do">## M-step: update estimates of (alpha,theta,g)</span></span>
+<span id="cb56-3"><a href="the-method.html#cb56-3" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="the-method.html#cb56-4" tabindex="-1"></a>    <span class="do">### Mstep_alpha</span></span>
+<span id="cb56-5"><a href="the-method.html#cb56-5" tabindex="-1"></a>    alpha_new <span class="ot">=</span> <span class="fu">Mstep_alpha</span>(X, weight_new, lambda_alpha, time_indicator)</span>
+<span id="cb56-6"><a href="the-method.html#cb56-6" tabindex="-1"></a>    Q_every <span class="ot">=</span> <span class="fu">append</span>(Q_every, <span class="fu">calc_surr</span>(X_bin, g_old, resi_old, theta_old, alpha_new, weight_new, idx_new, lambda_alpha, lambda_theta, K, N))</span>
+<span id="cb56-7"><a href="the-method.html#cb56-7" tabindex="-1"></a>    </span>
+<span id="cb56-8"><a href="the-method.html#cb56-8" tabindex="-1"></a>    <span class="do">### Mstep_theta</span></span>
+<span id="cb56-9"><a href="the-method.html#cb56-9" tabindex="-1"></a>    M_theta <span class="ot">=</span> <span class="fu">Mstep_theta</span>(X_bin, X, Y_bin, g_old, weight_new, idx_old, theta0_old, theta_old, lambda_theta, K, time_indicator)</span>
+<span id="cb56-10"><a href="the-method.html#cb56-10" tabindex="-1"></a>    theta0_new <span class="ot">=</span> M_theta<span class="sc">$</span>theta0</span>
+<span id="cb56-11"><a href="the-method.html#cb56-11" tabindex="-1"></a>    theta_new <span class="ot">=</span> M_theta<span class="sc">$</span>theta</span>
+<span id="cb56-12"><a href="the-method.html#cb56-12" tabindex="-1"></a>    </span>
+<span id="cb56-13"><a href="the-method.html#cb56-13" tabindex="-1"></a>    <span class="do">### Mstep_shift</span></span>
+<span id="cb56-14"><a href="the-method.html#cb56-14" tabindex="-1"></a>    theta0_new <span class="ot">=</span> <span class="fu">Mstep_shift</span>(X_bin, Y_bin, theta_new, weight_new, idx_new, K)</span>
+<span id="cb56-15"><a href="the-method.html#cb56-15" tabindex="-1"></a>    resi_new <span class="ot">=</span> <span class="fu">calc_resi</span>(X_bin, Y_bin, theta0_new, theta_new, K)</span>
+<span id="cb56-16"><a href="the-method.html#cb56-16" tabindex="-1"></a>    Q_every <span class="ot">=</span> <span class="fu">append</span>(Q_every, <span class="fu">calc_surr</span>(X_bin, g_old, resi_new, theta_new, alpha_new, weight_new, idx_new, lambda_alpha, lambda_theta, K, N))</span>
+<span id="cb56-17"><a href="the-method.html#cb56-17" tabindex="-1"></a>    </span>
+<span id="cb56-18"><a href="the-method.html#cb56-18" tabindex="-1"></a>    <span class="do">### Mstep_g</span></span>
+<span id="cb56-19"><a href="the-method.html#cb56-19" tabindex="-1"></a>    g_new <span class="ot">=</span> <span class="fu">Mstep_g</span>(resi_new, weight_new, idx_new, K)</span>
+<span id="cb56-20"><a href="the-method.html#cb56-20" tabindex="-1"></a>    Q_every <span class="ot">=</span> <span class="fu">append</span>(Q_every, <span class="fu">calc_surr</span>(X_bin, g_new, resi_new, theta_new, alpha_new, weight_new, idx_new, lambda_alpha, lambda_theta, K, N))</span>
+<span id="cb56-21"><a href="the-method.html#cb56-21" tabindex="-1"></a>    </span>
+<span id="cb56-22"><a href="the-method.html#cb56-22" tabindex="-1"></a>    <span class="do">### loglikelihood</span></span>
+<span id="cb56-23"><a href="the-method.html#cb56-23" tabindex="-1"></a>    Q <span class="ot">=</span> <span class="fu">append</span>(Q, <span class="fu">calc_surr</span>(X_bin, g_new, resi_new, theta_new, alpha_new, weight_new, idx_new, lambda_alpha, lambda_theta, K, N))</span></code></pre></div>
+<p>We have already seen the <code>Mstep_alpha()</code>, <code>Mstep_shift()</code>, and <code>Mstep_g(). We only need to define</code>Mstep_theta()` here.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="the-method.html#cb57-1" tabindex="-1"></a><span class="co">#&#39; Updating theta</span></span>
+<span id="cb57-2"><a href="the-method.html#cb57-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb57-3"><a href="the-method.html#cb57-3" tabindex="-1"></a><a href='the-method.html#X_bin-param'>&lt;&lt;X_bin-param&gt;&gt;</a></span>
+<span id="cb57-4"><a href="the-method.html#cb57-4" tabindex="-1"></a><a href='the-model.html#X-param'>&lt;&lt;X-param&gt;&gt;</a></span>
+<span id="cb57-5"><a href="the-method.html#cb57-5" tabindex="-1"></a><a href='the-method.html#Y_bin-param'>&lt;&lt;Y_bin-param&gt;&gt;</a></span>
+<span id="cb57-6"><a href="the-method.html#cb57-6" tabindex="-1"></a><a href='the-method.html#g-param'>&lt;&lt;g-param&gt;&gt;</a></span>
+<span id="cb57-7"><a href="the-method.html#cb57-7" tabindex="-1"></a><a href='the-method.html#weight-param'>&lt;&lt;weight-param&gt;&gt;</a></span>
+<span id="cb57-8"><a href="the-method.html#cb57-8" tabindex="-1"></a><span class="co">#&#39; @param idx_old N_bin by K logical matrix, but used in the previous iteration. </span></span>
+<span id="cb57-9"><a href="the-method.html#cb57-9" tabindex="-1"></a><span class="co">#&#39; idx[i, k] represents whether the corresponding previous weight is above r_bar</span></span>
+<span id="cb57-10"><a href="the-method.html#cb57-10" tabindex="-1"></a><a href='the-model.html#theta0-param'>&lt;&lt;theta0-param&gt;&gt;</a></span>
+<span id="cb57-11"><a href="the-method.html#cb57-11" tabindex="-1"></a><a href='the-model.html#theta-param'>&lt;&lt;theta-param&gt;&gt;</a></span>
+<span id="cb57-12"><a href="the-method.html#cb57-12" tabindex="-1"></a><a href='the-method.html#lambda_theta-param'>&lt;&lt;lambda_theta-param&gt;&gt;</a></span>
+<span id="cb57-13"><a href="the-method.html#cb57-13" tabindex="-1"></a><a href='the-method.html#K-param'>&lt;&lt;K-param&gt;&gt;</a></span>
+<span id="cb57-14"><a href="the-method.html#cb57-14" tabindex="-1"></a><span class="co">#&#39; @param time_indicator length N_bin factor indicating the time of the data points </span></span>
+<span id="cb57-15"><a href="the-method.html#cb57-15" tabindex="-1"></a><span class="co">#&#39; @return theta0 length K list, with `theta0[[k]]` being the estimate for the intercept coefficient</span></span>
+<span id="cb57-16"><a href="the-method.html#cb57-16" tabindex="-1"></a><span class="co">#&#39; of the regression for kth group</span></span>
+<span id="cb57-17"><a href="the-method.html#cb57-17" tabindex="-1"></a><span class="co">#&#39; @return theta length K list, with `theta[[k]]` being the p-by-1 vector of estimate for coefficients</span></span>
+<span id="cb57-18"><a href="the-method.html#cb57-18" tabindex="-1"></a><span class="co">#&#39; of the regression for kth group</span></span>
+<span id="cb57-19"><a href="the-method.html#cb57-19" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb57-20"><a href="the-method.html#cb57-20" tabindex="-1"></a>Mstep_theta <span class="ot">=</span> <span class="cf">function</span>(X_bin,</span>
+<span id="cb57-21"><a href="the-method.html#cb57-21" tabindex="-1"></a>                       X,</span>
+<span id="cb57-22"><a href="the-method.html#cb57-22" tabindex="-1"></a>                       Y_bin,</span>
+<span id="cb57-23"><a href="the-method.html#cb57-23" tabindex="-1"></a>                       g, </span>
+<span id="cb57-24"><a href="the-method.html#cb57-24" tabindex="-1"></a>                       weight, </span>
+<span id="cb57-25"><a href="the-method.html#cb57-25" tabindex="-1"></a>                       idx_old, </span>
+<span id="cb57-26"><a href="the-method.html#cb57-26" tabindex="-1"></a>                       theta0, </span>
+<span id="cb57-27"><a href="the-method.html#cb57-27" tabindex="-1"></a>                       theta,</span>
+<span id="cb57-28"><a href="the-method.html#cb57-28" tabindex="-1"></a>                       lambda_theta,</span>
+<span id="cb57-29"><a href="the-method.html#cb57-29" tabindex="-1"></a>                       K,</span>
+<span id="cb57-30"><a href="the-method.html#cb57-30" tabindex="-1"></a>                       time_indicator){</span>
+<span id="cb57-31"><a href="the-method.html#cb57-31" tabindex="-1"></a>  theta0_new <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb57-32"><a href="the-method.html#cb57-32" tabindex="-1"></a>  theta_new <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb57-33"><a href="the-method.html#cb57-33" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
+<span id="cb57-34"><a href="the-method.html#cb57-34" tabindex="-1"></a>    tmp <span class="ot">=</span> <span class="fu">LP_d1</span>(X_bin, X, Y_bin, g[[k]], weight[,k], idx_old[,k], theta0[[k]], theta[[k]], lambda_theta, time_indicator)</span>
+<span id="cb57-35"><a href="the-method.html#cb57-35" tabindex="-1"></a>    theta0_new[[k]] <span class="ot">=</span> tmp<span class="sc">$</span>theta0_k</span>
+<span id="cb57-36"><a href="the-method.html#cb57-36" tabindex="-1"></a>    theta_new[[k]] <span class="ot">=</span> tmp<span class="sc">$</span>theta_k</span>
+<span id="cb57-37"><a href="the-method.html#cb57-37" tabindex="-1"></a>  }</span>
+<span id="cb57-38"><a href="the-method.html#cb57-38" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="st">&#39;theta0&#39;</span> <span class="ot">=</span> theta0_new , <span class="st">&#39;theta&#39;</span> <span class="ot">=</span> theta_new ))</span>
+<span id="cb57-39"><a href="the-method.html#cb57-39" tabindex="-1"></a>}</span></code></pre></div>
+<p>We need an internal function which calculate theta using LP for each k</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="the-method.html#cb58-1" tabindex="-1"></a><span class="co">#&#39; Updating theta for each k</span></span>
+<span id="cb58-2"><a href="the-method.html#cb58-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb58-3"><a href="the-method.html#cb58-3" tabindex="-1"></a><a href='the-method.html#X_bin-param'>&lt;&lt;X_bin-param&gt;&gt;</a></span>
+<span id="cb58-4"><a href="the-method.html#cb58-4" tabindex="-1"></a><a href='the-model.html#X-param'>&lt;&lt;X-param&gt;&gt;</a></span>
+<span id="cb58-5"><a href="the-method.html#cb58-5" tabindex="-1"></a><a href='the-method.html#Y_bin-param'>&lt;&lt;Y_bin-param&gt;&gt;</a></span>
+<span id="cb58-6"><a href="the-method.html#cb58-6" tabindex="-1"></a><span class="co">#&#39; @param g_k `mlelcd` for the kth group</span></span>
+<span id="cb58-7"><a href="the-method.html#cb58-7" tabindex="-1"></a><span class="co">#&#39; @param weight_k N_bin vector of weight for kth group</span></span>
+<span id="cb58-8"><a href="the-method.html#cb58-8" tabindex="-1"></a><span class="co">#&#39; @param idx_old_k N_bin logical vector, but used in the previous iteration. </span></span>
+<span id="cb58-9"><a href="the-method.html#cb58-9" tabindex="-1"></a><span class="co">#&#39; idx_old_k[i] represents whether the corresponding previous weight for kth group is above r_bar</span></span>
+<span id="cb58-10"><a href="the-method.html#cb58-10" tabindex="-1"></a><span class="co">#&#39; @param theta0_k an intercept coefficient for the regression for the kth group</span></span>
+<span id="cb58-11"><a href="the-method.html#cb58-11" tabindex="-1"></a><span class="co">#&#39; @param theta_k a p-vector of coefficients for the regression for the kth group</span></span>
+<span id="cb58-12"><a href="the-method.html#cb58-12" tabindex="-1"></a><a href='the-method.html#lambda_theta-param'>&lt;&lt;lambda_theta-param&gt;&gt;</a></span>
+<span id="cb58-13"><a href="the-method.html#cb58-13" tabindex="-1"></a><span class="co">#&#39; @param time_indicator length N_bin factor indicating the time of the data points </span></span>
+<span id="cb58-14"><a href="the-method.html#cb58-14" tabindex="-1"></a><span class="co">#&#39; @return theta0_k estimate for the intercept coefficient of the regression for kth group</span></span>
+<span id="cb58-15"><a href="the-method.html#cb58-15" tabindex="-1"></a><span class="co">#&#39; @return theta_k p-vector of estimates for coefficients of the regression for kth group</span></span>
+<span id="cb58-16"><a href="the-method.html#cb58-16" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb58-17"><a href="the-method.html#cb58-17" tabindex="-1"></a>LP_d1 <span class="ot">=</span> <span class="cf">function</span>(X_bin,</span>
+<span id="cb58-18"><a href="the-method.html#cb58-18" tabindex="-1"></a>                 X,</span>
+<span id="cb58-19"><a href="the-method.html#cb58-19" tabindex="-1"></a>                 Y_bin,</span>
+<span id="cb58-20"><a href="the-method.html#cb58-20" tabindex="-1"></a>                 g_k, </span>
+<span id="cb58-21"><a href="the-method.html#cb58-21" tabindex="-1"></a>                 weight_k, </span>
+<span id="cb58-22"><a href="the-method.html#cb58-22" tabindex="-1"></a>                 idx_old_k, </span>
+<span id="cb58-23"><a href="the-method.html#cb58-23" tabindex="-1"></a>                 theta0_k, </span>
+<span id="cb58-24"><a href="the-method.html#cb58-24" tabindex="-1"></a>                 theta_k,</span>
+<span id="cb58-25"><a href="the-method.html#cb58-25" tabindex="-1"></a>                 lambda_theta,</span>
+<span id="cb58-26"><a href="the-method.html#cb58-26" tabindex="-1"></a>                 time_indicator){</span>
+<span id="cb58-27"><a href="the-method.html#cb58-27" tabindex="-1"></a>  weight <span class="ot">=</span> weight_k[idx_old_k]</span>
+<span id="cb58-28"><a href="the-method.html#cb58-28" tabindex="-1"></a>  Y_idx <span class="ot">=</span> Y_bin[idx_old_k]</span>
+<span id="cb58-29"><a href="the-method.html#cb58-29" tabindex="-1"></a>  X_idx <span class="ot">=</span> X_bin[idx_old_k,]</span>
+<span id="cb58-30"><a href="the-method.html#cb58-30" tabindex="-1"></a>  p <span class="ot">=</span> <span class="fu">dim</span>(X_idx)[<span class="dv">2</span>]</span>
+<span id="cb58-31"><a href="the-method.html#cb58-31" tabindex="-1"></a>  n <span class="ot">=</span> <span class="fu">dim</span>(X_idx)[<span class="dv">1</span>]   <span class="co"># the number of points in C_n</span></span>
+<span id="cb58-32"><a href="the-method.html#cb58-32" tabindex="-1"></a>  J <span class="ot">=</span> <span class="fu">length</span>(g_k<span class="sc">$</span>beta) <span class="co"># the number of affine functions</span></span>
+<span id="cb58-33"><a href="the-method.html#cb58-33" tabindex="-1"></a>  resi <span class="ot">=</span> Y_idx <span class="sc">-</span> <span class="fu">rep</span>(theta0_k, n) <span class="sc">-</span> X_idx <span class="sc">%*%</span> <span class="fu">as.matrix</span>(theta_k)</span>
+<span id="cb58-34"><a href="the-method.html#cb58-34" tabindex="-1"></a>  </span>
+<span id="cb58-35"><a href="the-method.html#cb58-35" tabindex="-1"></a>  L <span class="ot">=</span> <span class="fu">min</span>(resi)</span>
+<span id="cb58-36"><a href="the-method.html#cb58-36" tabindex="-1"></a>  U <span class="ot">=</span> <span class="fu">max</span>(resi) </span>
+<span id="cb58-37"><a href="the-method.html#cb58-37" tabindex="-1"></a>  const_mat <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> J<span class="sc">*</span>n <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>TT, <span class="at">ncol =</span> <span class="dv">2</span><span class="sc">*</span>(n<span class="sc">+</span>p<span class="sc">+</span><span class="dv">1</span>)) </span>
+<span id="cb58-38"><a href="the-method.html#cb58-38" tabindex="-1"></a>  const_vec <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, J<span class="sc">*</span>n <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>TT)</span>
+<span id="cb58-39"><a href="the-method.html#cb58-39" tabindex="-1"></a>  </span>
+<span id="cb58-40"><a href="the-method.html#cb58-40" tabindex="-1"></a>  <span class="co"># epigraph part</span></span>
+<span id="cb58-41"><a href="the-method.html#cb58-41" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb58-42"><a href="the-method.html#cb58-42" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>J) {</span>
+<span id="cb58-43"><a href="the-method.html#cb58-43" tabindex="-1"></a>      const_mat[(i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> j, i] <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb58-44"><a href="the-method.html#cb58-44" tabindex="-1"></a>      const_mat[(i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> j, n <span class="sc">+</span> i] <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb58-45"><a href="the-method.html#cb58-45" tabindex="-1"></a>    }</span>
+<span id="cb58-46"><a href="the-method.html#cb58-46" tabindex="-1"></a>    const_mat[((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> J), (<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">1</span>)] <span class="ot">=</span> g_k<span class="sc">$</span>b</span>
+<span id="cb58-47"><a href="the-method.html#cb58-47" tabindex="-1"></a>    const_mat[((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> J), (<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">2</span>)] <span class="ot">=</span> <span class="sc">-</span>g_k<span class="sc">$</span>b</span>
+<span id="cb58-48"><a href="the-method.html#cb58-48" tabindex="-1"></a>    const_mat[((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> J), (<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">3</span>)<span class="sc">:</span>(<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span>p<span class="sc">+</span><span class="dv">2</span>)] <span class="ot">=</span> g_k<span class="sc">$</span>b <span class="sc">%*%</span> X_idx[i,]</span>
+<span id="cb58-49"><a href="the-method.html#cb58-49" tabindex="-1"></a>    const_mat[((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> J), (<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span>p<span class="sc">+</span><span class="dv">3</span>)<span class="sc">:</span>(<span class="dv">2</span><span class="sc">*</span>(n<span class="sc">+</span>p<span class="sc">+</span><span class="dv">1</span>))] <span class="ot">=</span> </span>
+<span id="cb58-50"><a href="the-method.html#cb58-50" tabindex="-1"></a>      <span class="sc">-</span> const_mat[((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> J), (<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">3</span>)<span class="sc">:</span>(<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span>p<span class="sc">+</span><span class="dv">2</span>)]</span>
+<span id="cb58-51"><a href="the-method.html#cb58-51" tabindex="-1"></a>    const_vec[((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>((i<span class="dv">-1</span>)<span class="sc">*</span>J <span class="sc">+</span> J)] <span class="ot">=</span> Y_idx[i] <span class="sc">*</span> g_k<span class="sc">$</span>b <span class="sc">-</span> g_k<span class="sc">$</span>beta</span>
+<span id="cb58-52"><a href="the-method.html#cb58-52" tabindex="-1"></a>  }</span>
+<span id="cb58-53"><a href="the-method.html#cb58-53" tabindex="-1"></a>  </span>
+<span id="cb58-54"><a href="the-method.html#cb58-54" tabindex="-1"></a>    <span class="co"># feasibility part</span></span>
+<span id="cb58-55"><a href="the-method.html#cb58-55" tabindex="-1"></a>  const_mat[(J<span class="sc">*</span>n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(J<span class="sc">*</span>n<span class="sc">+</span>TT), <span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">1</span>] <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">1</span>, TT)</span>
+<span id="cb58-56"><a href="the-method.html#cb58-56" tabindex="-1"></a>  const_mat[(J<span class="sc">*</span>n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(J<span class="sc">*</span>n<span class="sc">+</span>TT), <span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">2</span>] <span class="ot">=</span> <span class="sc">-</span><span class="fu">rep</span>(<span class="dv">1</span>, TT)</span>
+<span id="cb58-57"><a href="the-method.html#cb58-57" tabindex="-1"></a>  const_mat[(J<span class="sc">*</span>n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(J<span class="sc">*</span>n<span class="sc">+</span>TT), <span class="dv">2</span><span class="sc">*</span>(n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">+</span> (<span class="dv">1</span><span class="sc">:</span>p)] <span class="ot">=</span> X </span>
+<span id="cb58-58"><a href="the-method.html#cb58-58" tabindex="-1"></a>  const_mat[(J<span class="sc">*</span>n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(J<span class="sc">*</span>n<span class="sc">+</span>TT), <span class="dv">2</span><span class="sc">*</span>(n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">+</span>p<span class="sc">+</span> (<span class="dv">1</span><span class="sc">:</span>p)] <span class="ot">=</span> <span class="sc">-</span>X</span>
+<span id="cb58-59"><a href="the-method.html#cb58-59" tabindex="-1"></a>  const_mat[(J<span class="sc">*</span>n<span class="sc">+</span>TT<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(J<span class="sc">*</span>n<span class="sc">+</span>TT<span class="sc">+</span>TT), <span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span>(<span class="dv">1</span><span class="sc">:</span>(<span class="dv">2</span><span class="sc">*</span>(p<span class="sc">+</span><span class="dv">1</span>)))] <span class="ot">=</span> <span class="sc">-</span>const_mat[(J<span class="sc">*</span>n<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(J<span class="sc">*</span>n<span class="sc">+</span>TT), <span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span>(<span class="dv">1</span><span class="sc">:</span>(<span class="dv">2</span><span class="sc">*</span>(p<span class="sc">+</span><span class="dv">1</span>)))]</span>
+<span id="cb58-60"><a href="the-method.html#cb58-60" tabindex="-1"></a>  </span>
+<span id="cb58-61"><a href="the-method.html#cb58-61" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>TT){  </span>
+<span id="cb58-62"><a href="the-method.html#cb58-62" tabindex="-1"></a>    const_vec[J<span class="sc">*</span>n <span class="sc">+</span> t] <span class="ot">=</span> <span class="fu">min</span>(Y_bin[time_indicator <span class="sc">==</span> t <span class="sc">&amp;</span> idx_old_k])<span class="sc">-</span> L</span>
+<span id="cb58-63"><a href="the-method.html#cb58-63" tabindex="-1"></a>    const_vec[J<span class="sc">*</span>n<span class="sc">+</span>TT <span class="sc">+</span> t] <span class="ot">=</span> U <span class="sc">-</span> <span class="fu">max</span>(Y_bin[time_indicator <span class="sc">==</span> t <span class="sc">&amp;</span> idx_old_k])</span>
+<span id="cb58-64"><a href="the-method.html#cb58-64" tabindex="-1"></a>  }</span>
+<span id="cb58-65"><a href="the-method.html#cb58-65" tabindex="-1"></a>  </span>
+<span id="cb58-66"><a href="the-method.html#cb58-66" tabindex="-1"></a>  </span>
+<span id="cb58-67"><a href="the-method.html#cb58-67" tabindex="-1"></a>  obj_coef <span class="ot">=</span> <span class="fu">c</span>(weight, <span class="sc">-</span>weight, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">rep</span>(<span class="sc">-</span>lambda_theta, <span class="dv">2</span><span class="sc">*</span>p))</span>
+<span id="cb58-68"><a href="the-method.html#cb58-68" tabindex="-1"></a>  const_dir <span class="ot">=</span> <span class="fu">rep</span>(<span class="st">&quot;&lt;=&quot;</span>, J<span class="sc">*</span>n <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>TT)</span>
+<span id="cb58-69"><a href="the-method.html#cb58-69" tabindex="-1"></a>  </span>
+<span id="cb58-70"><a href="the-method.html#cb58-70" tabindex="-1"></a>  <span class="co"># solving LP</span></span>
+<span id="cb58-71"><a href="the-method.html#cb58-71" tabindex="-1"></a>  lp_res <span class="ot">=</span> Rsymphony<span class="sc">::</span><span class="fu">Rsymphony_solve_LP</span>(<span class="at">obj =</span> obj_coef, <span class="at">mat =</span> const_mat, <span class="at">dir =</span> const_dir, <span class="at">rhs =</span> const_vec,  <span class="at">max =</span> T)</span>
+<span id="cb58-72"><a href="the-method.html#cb58-72" tabindex="-1"></a>  theta0_k <span class="ot">=</span> lp_res<span class="sc">$</span>solution[<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">1</span>] <span class="sc">-</span> lp_res<span class="sc">$</span>solution[<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">2</span>]</span>
+<span id="cb58-73"><a href="the-method.html#cb58-73" tabindex="-1"></a>  theta_k <span class="ot">=</span> <span class="fu">as.matrix</span>(lp_res<span class="sc">$</span>solution[(<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span><span class="dv">3</span>)<span class="sc">:</span>((<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span>p<span class="sc">+</span><span class="dv">2</span>))] <span class="sc">-</span> lp_res<span class="sc">$</span>solution[(<span class="dv">2</span><span class="sc">*</span>n<span class="sc">+</span>p<span class="sc">+</span><span class="dv">3</span>)<span class="sc">:</span>(<span class="dv">2</span><span class="sc">*</span>(n<span class="sc">+</span>p<span class="sc">+</span><span class="dv">1</span>))])</span>
+<span id="cb58-74"><a href="the-method.html#cb58-74" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">theta0_k =</span> theta0_k, <span class="at">theta_k =</span> theta_k)) <span class="co">#theta</span></span>
+<span id="cb58-75"><a href="the-method.html#cb58-75" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="trying-out-the-method" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Trying out the method<a href="the-method.html#trying-out-the-method" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="the-method.html#cb59-1" tabindex="-1"></a><span class="co">#&#39; Mixture of log-concave regression</span></span>
+<span id="cb59-2"><a href="the-method.html#cb59-2" tabindex="-1"></a><span class="co">#&#39; </span></span>
+<span id="cb59-3"><a href="the-method.html#cb59-3" tabindex="-1"></a><a href='the-model.html#X-param'>&lt;&lt;X-param&gt;&gt;</a></span>
+<span id="cb59-4"><a href="the-method.html#cb59-4" tabindex="-1"></a><a href='the-model.html#Y-param'>&lt;&lt;Y-param&gt;&gt;</a></span>
+<span id="cb59-5"><a href="the-method.html#cb59-5" tabindex="-1"></a><a href='the-method.html#K-param'>&lt;&lt;K-param&gt;&gt;</a></span>
+<span id="cb59-6"><a href="the-method.html#cb59-6" tabindex="-1"></a><a href='the-method.html#B-param'>&lt;&lt;B-param&gt;&gt;</a></span>
+<span id="cb59-7"><a href="the-method.html#cb59-7" tabindex="-1"></a><span class="co">#&#39; @param min_count_ratio min count ratio</span></span>
+<span id="cb59-8"><a href="the-method.html#cb59-8" tabindex="-1"></a><a href='the-method.html#r_bar-param'>&lt;&lt;r_bar-param&gt;&gt;</a></span>
+<span id="cb59-9"><a href="the-method.html#cb59-9" tabindex="-1"></a><a href='the-method.html#lambda_alpha-param'>&lt;&lt;lambda_alpha-param&gt;&gt;</a></span>
+<span id="cb59-10"><a href="the-method.html#cb59-10" tabindex="-1"></a><a href='the-method.html#lambda_theta-param'>&lt;&lt;lambda_theta-param&gt;&gt;</a></span>
+<span id="cb59-11"><a href="the-method.html#cb59-11" tabindex="-1"></a><span class="co">#&#39; @param max_iter number of maximum iterations of EM to perform</span></span>
+<span id="cb59-12"><a href="the-method.html#cb59-12" tabindex="-1"></a><span class="co">#&#39; @param iter_eta threshold for the iteration. If the increment of loglikelihood is smaller than iter_eta,</span></span>
+<span id="cb59-13"><a href="the-method.html#cb59-13" tabindex="-1"></a><span class="co">#&#39; we terminate the iterations.</span></span>
+<span id="cb59-14"><a href="the-method.html#cb59-14" tabindex="-1"></a><span class="co">#&#39; @return X a T-by-p matrix of covariates, where `X[[t]]` being the p-vector of independent variable at time t</span></span>
+<span id="cb59-15"><a href="the-method.html#cb59-15" tabindex="-1"></a><span class="co">#&#39; @return Y length T list with `Y[[t]]` being a n_t-by-d matrix</span></span>
+<span id="cb59-16"><a href="the-method.html#cb59-16" tabindex="-1"></a><span class="co">#&#39; @return Y_count N_bin-vector indicating how many points belong to each bin</span></span>
+<span id="cb59-17"><a href="the-method.html#cb59-17" tabindex="-1"></a><span class="co">#&#39; @return N the total number of observations of Y_i^(t) in Y </span></span>
+<span id="cb59-18"><a href="the-method.html#cb59-18" tabindex="-1"></a><span class="co">#&#39; @return resp_init N_bin by K matrix. `resp_init[i, k]` being the initial estimate for P(Z_i = k|X, Y) </span></span>
+<span id="cb59-19"><a href="the-method.html#cb59-19" tabindex="-1"></a><span class="co">#&#39; @return weight_init N_bin by K matrix. weight_init[i, k] represents initial weight of ith residual for kth group</span></span>
+<span id="cb59-20"><a href="the-method.html#cb59-20" tabindex="-1"></a><span class="co">#&#39; @return idx_init N_bin by K logical matrix. idx_init[i, k] represents whether the corresponding initial weight is above r_bar</span></span>
+<span id="cb59-21"><a href="the-method.html#cb59-21" tabindex="-1"></a><span class="co">#&#39; @return theta0_init length K list, with `theta0_init[[k]]` being the initial estimate for the intercept coefficient of the regression for kth group</span></span>
+<span id="cb59-22"><a href="the-method.html#cb59-22" tabindex="-1"></a><span class="co">#&#39; @return theta_init length K list, with `theta_init[[k]]` being the p-by-1 vector. </span></span>
+<span id="cb59-23"><a href="the-method.html#cb59-23" tabindex="-1"></a><span class="co">#&#39; Initial estimates for coefficients of the regression for kth group</span></span>
+<span id="cb59-24"><a href="the-method.html#cb59-24" tabindex="-1"></a><span class="co">#&#39; @return alpha_init (p+1)-by-K matrix. The coefficients for the initial cluster probabilities.</span></span>
+<span id="cb59-25"><a href="the-method.html#cb59-25" tabindex="-1"></a><span class="co">#&#39; @return resi_init length K list with `resi_init[[k]]` N_bin-by-d initial residual matrix</span></span>
+<span id="cb59-26"><a href="the-method.html#cb59-26" tabindex="-1"></a><span class="co">#&#39; @return g_init length K list, with `g_init[[k]]` being the initial `mlelcd` for the kth group</span></span>
+<span id="cb59-27"><a href="the-method.html#cb59-27" tabindex="-1"></a><span class="co">#&#39; @return resp N_bin by K matrix. `resp[i, k]` being the final estimate for P(Z_i = k|X, Y) </span></span>
+<span id="cb59-28"><a href="the-method.html#cb59-28" tabindex="-1"></a><span class="co">#&#39; @return weight N_bin by K matrix. weight[i, k] represents initial weight of ith residual for kth group</span></span>
+<span id="cb59-29"><a href="the-method.html#cb59-29" tabindex="-1"></a><span class="co">#&#39; @return idx N_bin by K logical matrix. idx[i, k] represents whether the corresponding final weight is above r_bar</span></span>
+<span id="cb59-30"><a href="the-method.html#cb59-30" tabindex="-1"></a><span class="co">#&#39; @return theta0 length K list, with `theta0[[k]]` being the final estimate for the intercept coefficient of the regression for kth group</span></span>
+<span id="cb59-31"><a href="the-method.html#cb59-31" tabindex="-1"></a><span class="co">#&#39; @return theta length K list, with `theta[[k]]` being the p-by-1 vector. </span></span>
+<span id="cb59-32"><a href="the-method.html#cb59-32" tabindex="-1"></a><span class="co">#&#39; Final estimates for coefficients of the regression for kth group</span></span>
+<span id="cb59-33"><a href="the-method.html#cb59-33" tabindex="-1"></a><span class="co">#&#39; @return alpha (p+1)-by-K matrix. The coefficients for the cluster probabilities.</span></span>
+<span id="cb59-34"><a href="the-method.html#cb59-34" tabindex="-1"></a><span class="co">#&#39; @return resi length K list with `resi[[k]]` N_bin-by-d final residual matrix</span></span>
+<span id="cb59-35"><a href="the-method.html#cb59-35" tabindex="-1"></a><span class="co">#&#39; @return g length K list, with `g[[k]]` being the final `mlelcd` for the kth group</span></span>
+<span id="cb59-36"><a href="the-method.html#cb59-36" tabindex="-1"></a><span class="co">#&#39; @return Q a vector of the surrogate loglikelihoods of the parameters, stored at each iteration</span></span>
+<span id="cb59-37"><a href="the-method.html#cb59-37" tabindex="-1"></a><span class="co">#&#39; @return Q_every a vector of the surrogate loglikelihoods of the parameters, stored at each step</span></span>
+<span id="cb59-38"><a href="the-method.html#cb59-38" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb59-39"><a href="the-method.html#cb59-39" tabindex="-1"></a><span id='mixLcdReg'>mixLcdReg</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(X, </span>
+<span id="cb59-40"><a href="the-method.html#cb59-40" tabindex="-1"></a>                      Y, </span>
+<span id="cb59-41"><a href="the-method.html#cb59-41" tabindex="-1"></a>                      K, </span>
+<span id="cb59-42"><a href="the-method.html#cb59-42" tabindex="-1"></a>                      <span class="at">B =</span> <span class="dv">40</span>, </span>
+<span id="cb59-43"><a href="the-method.html#cb59-43" tabindex="-1"></a>                      <span class="at">min_count_ratio =</span> <span class="dv">0</span>,</span>
+<span id="cb59-44"><a href="the-method.html#cb59-44" tabindex="-1"></a>                      r_bar, </span>
+<span id="cb59-45"><a href="the-method.html#cb59-45" tabindex="-1"></a>                      lambda_alpha, </span>
+<span id="cb59-46"><a href="the-method.html#cb59-46" tabindex="-1"></a>                      lambda_theta, </span>
+<span id="cb59-47"><a href="the-method.html#cb59-47" tabindex="-1"></a>                      <span class="at">max_iter =</span> <span class="dv">100</span>, </span>
+<span id="cb59-48"><a href="the-method.html#cb59-48" tabindex="-1"></a>                      <span class="at">iter_eta =</span> <span class="fl">1e-6</span>) {</span>
+<span id="cb59-49"><a href="the-method.html#cb59-49" tabindex="-1"></a>  </span>
+<span id="cb59-50"><a href="the-method.html#cb59-50" tabindex="-1"></a>  <span class="co"># preprocessing</span></span>
+<span id="cb59-51"><a href="the-method.html#cb59-51" tabindex="-1"></a><a href='the-method.html#preprocessing'>&lt;&lt;preprocessing&gt;&gt;</a></span>
+<span id="cb59-52"><a href="the-method.html#cb59-52" tabindex="-1"></a>  </span>
+<span id="cb59-53"><a href="the-method.html#cb59-53" tabindex="-1"></a>  <span class="co"># initialization</span></span>
+<span id="cb59-54"><a href="the-method.html#cb59-54" tabindex="-1"></a><a href='the-method.html#initialization'>&lt;&lt;initialization&gt;&gt;</a></span>
+<span id="cb59-55"><a href="the-method.html#cb59-55" tabindex="-1"></a>  </span>
+<span id="cb59-56"><a href="the-method.html#cb59-56" tabindex="-1"></a>  <span class="do">## initial Q</span></span>
+<span id="cb59-57"><a href="the-method.html#cb59-57" tabindex="-1"></a>  Q <span class="ot">=</span> <span class="fu">calc_surr</span>(X_bin, g_init, resi_init, theta_init, alpha_init, weight_init, idx_init, lambda_alpha, lambda_theta, K, N)</span>
+<span id="cb59-58"><a href="the-method.html#cb59-58" tabindex="-1"></a>  Q_every <span class="ot">=</span> Q</span>
+<span id="cb59-59"><a href="the-method.html#cb59-59" tabindex="-1"></a>  </span>
+<span id="cb59-60"><a href="the-method.html#cb59-60" tabindex="-1"></a>  idx_old <span class="ot">=</span> idx_init</span>
+<span id="cb59-61"><a href="the-method.html#cb59-61" tabindex="-1"></a>  resi_old <span class="ot">=</span> resi_init</span>
+<span id="cb59-62"><a href="the-method.html#cb59-62" tabindex="-1"></a>  alpha_old <span class="ot">=</span> alpha_init</span>
+<span id="cb59-63"><a href="the-method.html#cb59-63" tabindex="-1"></a>  theta0_old <span class="ot">=</span> theta0_init</span>
+<span id="cb59-64"><a href="the-method.html#cb59-64" tabindex="-1"></a>  theta_old <span class="ot">=</span> theta_init</span>
+<span id="cb59-65"><a href="the-method.html#cb59-65" tabindex="-1"></a>  g_old <span class="ot">=</span> g_init</span>
+<span id="cb59-66"><a href="the-method.html#cb59-66" tabindex="-1"></a>  </span>
+<span id="cb59-67"><a href="the-method.html#cb59-67" tabindex="-1"></a>  <span class="co"># iteration</span></span>
+<span id="cb59-68"><a href="the-method.html#cb59-68" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(max_iter)) {</span>
+<span id="cb59-69"><a href="the-method.html#cb59-69" tabindex="-1"></a>    </span>
+<span id="cb59-70"><a href="the-method.html#cb59-70" tabindex="-1"></a>    <span class="do">## E-step</span></span>
+<span id="cb59-71"><a href="the-method.html#cb59-71" tabindex="-1"></a><a href='the-method.html#E-step'>&lt;&lt;E-step&gt;&gt;</a></span>
+<span id="cb59-72"><a href="the-method.html#cb59-72" tabindex="-1"></a>    Q_every <span class="ot">=</span> <span class="fu">append</span>(Q_every, <span class="fu">calc_surr</span>(X_bin, g_old, resi_old, theta_old, alpha_old, weight_new, idx_new, lambda_alpha, lambda_theta, K, N))</span>
+<span id="cb59-73"><a href="the-method.html#cb59-73" tabindex="-1"></a>    </span>
+<span id="cb59-74"><a href="the-method.html#cb59-74" tabindex="-1"></a>    <span class="do">## M-step</span></span>
+<span id="cb59-75"><a href="the-method.html#cb59-75" tabindex="-1"></a><a href='the-method.html#M-step'>&lt;&lt;M-step&gt;&gt;</a></span>
+<span id="cb59-76"><a href="the-method.html#cb59-76" tabindex="-1"></a>    </span>
+<span id="cb59-77"><a href="the-method.html#cb59-77" tabindex="-1"></a>    <span class="do">## termination criteria</span></span>
+<span id="cb59-78"><a href="the-method.html#cb59-78" tabindex="-1"></a>    <span class="fu">print</span>(i)</span>
+<span id="cb59-79"><a href="the-method.html#cb59-79" tabindex="-1"></a>    <span class="cf">if</span> (Q[i<span class="sc">+</span><span class="dv">1</span>]<span class="sc">-</span>Q[i] <span class="sc">&lt;=</span> iter_eta  <span class="sc">|</span> i<span class="sc">==</span>max_iter){</span>
+<span id="cb59-80"><a href="the-method.html#cb59-80" tabindex="-1"></a>      <span class="cf">break</span>;</span>
+<span id="cb59-81"><a href="the-method.html#cb59-81" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb59-82"><a href="the-method.html#cb59-82" tabindex="-1"></a>      idx_old <span class="ot">=</span> idx_new</span>
+<span id="cb59-83"><a href="the-method.html#cb59-83" tabindex="-1"></a>      resi_old <span class="ot">=</span> resi_new</span>
+<span id="cb59-84"><a href="the-method.html#cb59-84" tabindex="-1"></a>      alpha_old <span class="ot">=</span> alpha_new</span>
+<span id="cb59-85"><a href="the-method.html#cb59-85" tabindex="-1"></a>      theta0_old <span class="ot">=</span> theta0_new</span>
+<span id="cb59-86"><a href="the-method.html#cb59-86" tabindex="-1"></a>      theta_old <span class="ot">=</span> theta_new</span>
+<span id="cb59-87"><a href="the-method.html#cb59-87" tabindex="-1"></a>      g_old <span class="ot">=</span> g_new</span>
+<span id="cb59-88"><a href="the-method.html#cb59-88" tabindex="-1"></a>    }</span>
+<span id="cb59-89"><a href="the-method.html#cb59-89" tabindex="-1"></a>  }</span>
+<span id="cb59-90"><a href="the-method.html#cb59-90" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb59-91"><a href="the-method.html#cb59-91" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">X =</span> X,</span>
+<span id="cb59-92"><a href="the-method.html#cb59-92" tabindex="-1"></a>              <span class="at">X_bin =</span> X_bin,</span>
+<span id="cb59-93"><a href="the-method.html#cb59-93" tabindex="-1"></a>              <span class="at">Y =</span> Y,</span>
+<span id="cb59-94"><a href="the-method.html#cb59-94" tabindex="-1"></a>              <span class="at">Y_bin =</span> Y_bin,</span>
+<span id="cb59-95"><a href="the-method.html#cb59-95" tabindex="-1"></a>              <span class="at">Y_count =</span> Y_count,</span>
+<span id="cb59-96"><a href="the-method.html#cb59-96" tabindex="-1"></a>              <span class="at">N =</span> N,</span>
+<span id="cb59-97"><a href="the-method.html#cb59-97" tabindex="-1"></a>              <span class="at">resp_init =</span> resp_init,</span>
+<span id="cb59-98"><a href="the-method.html#cb59-98" tabindex="-1"></a>              <span class="at">weight_init =</span> weight_init,</span>
+<span id="cb59-99"><a href="the-method.html#cb59-99" tabindex="-1"></a>              <span class="at">idx_init =</span> idx_init,</span>
+<span id="cb59-100"><a href="the-method.html#cb59-100" tabindex="-1"></a>              <span class="at">theta0_init =</span> theta0_init,</span>
+<span id="cb59-101"><a href="the-method.html#cb59-101" tabindex="-1"></a>              <span class="at">theta_init =</span> theta_init,</span>
+<span id="cb59-102"><a href="the-method.html#cb59-102" tabindex="-1"></a>              <span class="at">alpha_init =</span> alpha_init,</span>
+<span id="cb59-103"><a href="the-method.html#cb59-103" tabindex="-1"></a>              <span class="at">resi_init =</span> resi_init,</span>
+<span id="cb59-104"><a href="the-method.html#cb59-104" tabindex="-1"></a>              <span class="at">g_init =</span> g_init, </span>
+<span id="cb59-105"><a href="the-method.html#cb59-105" tabindex="-1"></a>              <span class="at">resp =</span> resp_new,</span>
+<span id="cb59-106"><a href="the-method.html#cb59-106" tabindex="-1"></a>              <span class="at">weight =</span> weight_new,</span>
+<span id="cb59-107"><a href="the-method.html#cb59-107" tabindex="-1"></a>              <span class="at">idx =</span> idx_new,</span>
+<span id="cb59-108"><a href="the-method.html#cb59-108" tabindex="-1"></a>              <span class="at">theta0 =</span> theta0_new,</span>
+<span id="cb59-109"><a href="the-method.html#cb59-109" tabindex="-1"></a>              <span class="at">theta =</span> theta_new,</span>
+<span id="cb59-110"><a href="the-method.html#cb59-110" tabindex="-1"></a>              <span class="at">alpha =</span> alpha_new,</span>
+<span id="cb59-111"><a href="the-method.html#cb59-111" tabindex="-1"></a>              <span class="at">resi =</span> resi_new,</span>
+<span id="cb59-112"><a href="the-method.html#cb59-112" tabindex="-1"></a>              <span class="at">g =</span> g_new, </span>
+<span id="cb59-113"><a href="the-method.html#cb59-113" tabindex="-1"></a>              <span class="at">Q =</span> Q,</span>
+<span id="cb59-114"><a href="the-method.html#cb59-114" tabindex="-1"></a>              <span class="at">Q_every =</span> Q_every))</span>
+<span id="cb59-115"><a href="the-method.html#cb59-115" tabindex="-1"></a>}</span></code></pre></div>
+<p>Let’s try out our method</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="the-method.html#cb60-1" tabindex="-1"></a>mix1 <span class="ot">=</span> <span class="fu">mixLcdReg</span>(<span class="at">X =</span> X, </span>
+<span id="cb60-2"><a href="the-method.html#cb60-2" tabindex="-1"></a>                 <span class="at">Y =</span> Y, </span>
+<span id="cb60-3"><a href="the-method.html#cb60-3" tabindex="-1"></a>                 <span class="at">K =</span> <span class="dv">2</span>, </span>
+<span id="cb60-4"><a href="the-method.html#cb60-4" tabindex="-1"></a>                 <span class="at">B =</span> <span class="dv">40</span>, </span>
+<span id="cb60-5"><a href="the-method.html#cb60-5" tabindex="-1"></a>                 <span class="at">min_count_ratio =</span> <span class="fl">0.01</span>, </span>
+<span id="cb60-6"><a href="the-method.html#cb60-6" tabindex="-1"></a>                 <span class="at">r_bar =</span> <span class="fl">1e-3</span>, </span>
+<span id="cb60-7"><a href="the-method.html#cb60-7" tabindex="-1"></a>                 <span class="at">lambda_alpha =</span> <span class="fl">1e-8</span>, </span>
+<span id="cb60-8"><a href="the-method.html#cb60-8" tabindex="-1"></a>                 <span class="at">lambda_theta =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>Here’s Loglikelihood plot</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="the-method.html#cb61-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&#39;s&#39;</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb61-2"><a href="the-method.html#cb61-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">0</span><span class="sc">:</span>(<span class="fu">length</span>(mix1<span class="sc">$</span>Q)<span class="sc">-</span><span class="dv">1</span>), mix1<span class="sc">$</span>Q, <span class="at">type =</span><span class="st">&#39;b&#39;</span>, <span class="at">main =</span> <span class="st">&#39;The mixture of loglikelihood&#39;</span>)</span>
+<span id="cb61-3"><a href="the-method.html#cb61-3" tabindex="-1"></a><span class="fu">print</span>(mix1<span class="sc">$</span>Q)</span></code></pre></div>
+<p>Here’s the true <span class="math inline">\(\theta_0\)</span>, initial estimate <span class="math inline">\(\hat \theta_0\)</span>, and the final estimate <span class="math inline">\(\hat \theta_0\)</span></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="the-method.html#cb62-1" tabindex="-1"></a><span class="fu">print</span>(theta0_true)</span>
+<span id="cb62-2"><a href="the-method.html#cb62-2" tabindex="-1"></a><span class="fu">print</span>(mix1<span class="sc">$</span>theta0_init)</span>
+<span id="cb62-3"><a href="the-method.html#cb62-3" tabindex="-1"></a><span class="fu">print</span>(mix1<span class="sc">$</span>theta0)</span></code></pre></div>
+<p>Here’s the true <span class="math inline">\(\theta\)</span>, initial estimate <span class="math inline">\(\hat \theta\)</span>, and the final estimate <span class="math inline">\(\hat \theta\)</span></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="the-method.html#cb63-1" tabindex="-1"></a><span class="fu">print</span>(theta_true)</span>
+<span id="cb63-2"><a href="the-method.html#cb63-2" tabindex="-1"></a><span class="fu">print</span>(mix1<span class="sc">$</span>theta_init)</span>
+<span id="cb63-3"><a href="the-method.html#cb63-3" tabindex="-1"></a><span class="fu">print</span>(mix1<span class="sc">$</span>theta)</span></code></pre></div>
+<p>Here’s the true <span class="math inline">\(\alpha\)</span>, initial estimate <span class="math inline">\(\hat \alpha\)</span>, and the final estimate <span class="math inline">\(\hat \alpha\)</span></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="the-method.html#cb64-1" tabindex="-1"></a><span class="fu">print</span>(alpha_true)</span>
+<span id="cb64-2"><a href="the-method.html#cb64-2" tabindex="-1"></a><span class="fu">print</span>(mix1<span class="sc">$</span>alpha_init)</span>
+<span id="cb64-3"><a href="the-method.html#cb64-3" tabindex="-1"></a><span class="fu">print</span>(mix1<span class="sc">$</span>alpha)</span></code></pre></div>
+<p>Here are the plots of final g’s. The red curves are the true g.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="the-method.html#cb65-1" tabindex="-1"></a>minI <span class="ot">=</span> <span class="fu">min</span>(<span class="fu">unlist</span>(mix1<span class="sc">$</span>resi))</span>
+<span id="cb65-2"><a href="the-method.html#cb65-2" tabindex="-1"></a>maxI <span class="ot">=</span> <span class="fu">max</span>(<span class="fu">unlist</span>(mix1<span class="sc">$</span>resi))</span>
+<span id="cb65-3"><a href="the-method.html#cb65-3" tabindex="-1"></a>grid0 <span class="ot">=</span> <span class="fu">seq</span>(minI, maxI, <span class="at">length =</span> <span class="dv">200</span>)</span>
+<span id="cb65-4"><a href="the-method.html#cb65-4" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="the-method.html#cb65-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&#39;s&#39;</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb65-6"><a href="the-method.html#cb65-6" tabindex="-1"></a><span class="fu">plot</span>(mix1<span class="sc">$</span>g[[<span class="dv">1</span>]])</span>
+<span id="cb65-7"><a href="the-method.html#cb65-7" tabindex="-1"></a><span class="fu">lines</span>(grid0, <span class="fu">dnorm</span>(grid0), <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span>
+<span id="cb65-8"><a href="the-method.html#cb65-8" tabindex="-1"></a><span class="fu">plot</span>(mix1<span class="sc">$</span>g[[<span class="dv">2</span>]], <span class="at">xlab =</span> <span class="st">&#39;residuals&#39;</span>)</span>
+<span id="cb65-9"><a href="the-method.html#cb65-9" tabindex="-1"></a><span class="fu">lines</span>(grid0, <span class="fu">exp</span>(<span class="sc">-</span>grid0<span class="dv">-1</span>), <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<p>The black curves in the left plot are made using final estimates for <span class="math inline">\(\theta_0\)</span> and <span class="math inline">\(\theta\)</span>. The right plot is the true plot that we saw before.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="the-method.html#cb66-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pty =</span> <span class="st">&#39;s&#39;</span>, <span class="at">cex =</span> <span class="fl">0.7</span>)</span>
+<span id="cb66-2"><a href="the-method.html#cb66-2" tabindex="-1"></a><a href='the-model.html#plot_data_and_model'>plot_data_and_model</a>(X, Y, Z, mix1<span class="sc">$</span>theta0, mix1<span class="sc">$</span>theta)</span>
+<span id="cb66-3"><a href="the-method.html#cb66-3" tabindex="-1"></a><a href='the-model.html#plot_data_and_model'>plot_data_and_model</a>(X, Y, Z, theta0_true, theta_true)</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclude.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
